@@ -26,7 +26,7 @@ void AppStateManager::OnLoop() {
 
 void AppStateManager::OnRender(SDL_Surface* Surf_Display) {
     if (ActiveAppState) {
-        logger << "AppStateManager::OnRender\n";
+        //logger << "AppStateManager::OnRender\n";
         ActiveAppState->OnRender(Surf_Display);
     }
 }

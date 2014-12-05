@@ -35,7 +35,7 @@ void AppStateIntro::OnLoop() {
 
 void AppStateIntro::OnRender(SDL_Surface* Surf_Display) {
     if (Surf_Logo) {
-        logger << "intro OnRender" << endl;
+        //logger << "intro OnRender" << endl;
         Surface::OnDraw(Surf_Display, Surf_Logo, 0, 0);
     } else {
         logger << "intro OnRender fail" << endl;
