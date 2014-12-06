@@ -21,6 +21,7 @@ class TicTacGameState : public AppState {
     SDL_Surface* m_o;
     XOTypes  m_map[3][3];
     XOTypes  m_user;
+    XOTypes  m_winer;
 public:
     TicTacGameState();
     XOTypes getWiner();

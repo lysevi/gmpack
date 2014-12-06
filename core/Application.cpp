@@ -74,10 +74,10 @@ void Application::OnRender() {
 }
 
 void Application::OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Right, bool Middle) {
-    std::cerr << "mx=" << mX << " mY" << mY
+    /*std::cerr << "mx=" << mX << " mY" << mY
             << " relX" << relX << " relY" << relY
             << " left" << Left << " Right" << Right << " Midle" << Middle
-            << std::endl;
+            << std::endl;*/
 }
 
 void Application::OnLButtonDown(int mX, int mY) {
