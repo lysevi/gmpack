@@ -9,9 +9,10 @@
 #include "AppStateManager.h"
 #include "ProcessLogger.h"
 
-AppStateIntro::AppStateIntro(const std::string FileName) {
+AppStateIntro::AppStateIntro(const std::string FileName, uint _time) {
     Surf_Logo = NULL;
     m_FileName = FileName;
+    m_time=_time;
 }
 
 void AppStateIntro::OnActivate() {
@@ -28,7 +29,7 @@ void AppStateIntro::OnDeactivate() {
 }
 
 void AppStateIntro::OnLoop() {
-    if (StartTime + 3000 < SDL_GetTicks()) {
+    if (StartTime + m_time < SDL_GetTicks()) {
         AppStateManager::SetActiveAppState(APPSTATE_GAME);
     }
 }

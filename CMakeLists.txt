@@ -13,6 +13,7 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -Wwrite-strings -g -ftest-cov
 
 add_subdirectory(core)
 add_subdirectory(tic_tac)
+add_subdirectory(tetra)
 #file(GLOB src_cpp "*.cpp" "core/*.cpp" "units/*.cpp")
 #add_executable(tdg ${src_cpp})
 #TARGET_LINK_LIBRARIES(tdg ${SDL_LIBRARY})

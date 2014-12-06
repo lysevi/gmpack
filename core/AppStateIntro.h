@@ -15,8 +15,9 @@ private:
     SDL_Surface* Surf_Logo;
     int StartTime;
     std::string m_FileName;
+    uint m_time;
 public:
-    AppStateIntro(const std::string FileName);
+    AppStateIntro(const std::string FileName, uint _time=3000);
     void OnActivate();
     void OnDeactivate();
     void OnLoop();
