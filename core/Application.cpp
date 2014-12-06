@@ -9,6 +9,7 @@
 #include "Application.h"
 #include "AppStateManager.h"
 #include "Surface.h"
+#include "FPS.h"
 
 Application::Application(int width, int height) {
     Surf_Display = NULL;
@@ -65,7 +66,12 @@ void Application::OnExit() {
 }
 
 void Application::OnLoop() {
+    FPS::FPSControl.OnLoop();
     AppStateManager::OnLoop();
+
+    char Buffer[255];
+    sprintf(Buffer, "FPS: %d", FPS::FPSControl.GetFPS());
+    SDL_WM_SetCaption(Buffer, Buffer);
 }
 
 void Application::OnRender() {
