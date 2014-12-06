@@ -35,7 +35,7 @@ void TicTacGameState::OnDeactivate() {
 }
 
 void TicTacGameState::OnLoop() {
-    if(m_user!= XOTypes::O){
+    if(m_user!= XOTypes::O || m_winer!=XOTypes::None){
         return;
     }
     
