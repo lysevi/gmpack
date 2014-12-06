@@ -10,21 +10,13 @@
 
 namespace core {
 
-    class Health {
-    public:
+    struct Health {
         Health();
-        Health(int maxHealt, int curHealth);
+        Health(int maxHealth, int curHealth);
         Health(const Health& orig);
-        virtual ~Health();
 
-        int getMaxHealth()const;
-        void setMaxHealth(const int);
-
-        int getHealth()const;
-        void setHealth(const int);
-    protected:
-        int m_maxHealth;
-        int m_curHealth;
+        int maxHealth;
+        int curHealth;
     };
 }
 #endif	/* HEALTH_H */

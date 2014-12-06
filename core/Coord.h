@@ -10,20 +10,13 @@
 
 namespace core {
 
-    class Coord {
-    public:
+    struct Coord {
         Coord(int x, int y);
         Coord();
         Coord(const Coord& orig);
-        virtual ~Coord();
 
-        int getX()const;
-        int setX(int x);
-
-        int getY()const;
-        int setY(int y);
-    private:
-        int m_x, m_y;
+        int x;
+        int y;
     };
 }
 #endif	/* COORD_H */
