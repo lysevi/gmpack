@@ -67,3 +67,7 @@ bool Surface::Transparent(SDL_Surface* Surf_Dest, int R, int G, int B) {
 
     return true;
 }
+
+void Surface::ClearSurface(SDL_Surface* surface, Uint32 colour){
+    SDL_FillRect(surface, NULL, colour);
+}

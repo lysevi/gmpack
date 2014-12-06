@@ -1,6 +1,4 @@
-#ifndef CSURFACE_H
-#define CSURFACE_H
-
+#pragma once
 #include <string>
 
 class Surface {
@@ -14,5 +12,6 @@ public:
 
     static bool OnDraw(SDL_Surface* Surf_Dest, SDL_Surface* Surf_Src, int X, int Y, int X2, int Y2, int W, int H);
     static bool Transparent(SDL_Surface* Surf_Dest, int R, int G, int B);
+    static void ClearSurface(SDL_Surface* surface, Uint32 colour);
 };
-#endif // CSURFACE_H
+
