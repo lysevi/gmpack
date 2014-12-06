@@ -8,8 +8,12 @@
 #include "TicTacGameState.h"
 #include "ProcessLogger.h"
 #include "Surface.h"
+#include <Coord.h>
+#include <vector>
+#include <cstdlib>
 
 TicTacGameState::TicTacGameState() {
+    std::srand(time(0));
 }
 
 void TicTacGameState::OnActivate() {
@@ -31,7 +35,27 @@ void TicTacGameState::OnDeactivate() {
 }
 
 void TicTacGameState::OnLoop() {
-
+    if(m_user!= XOTypes::O){
+        return;
+    }
+    
+    std::vector<core::Coord> free_coords;
+    for(int i=0;i<3;++i){
+        for(int j=0;j<3;++j){
+            if(m_map[i][j]==XOTypes::None)
+                free_coords.push_back(core::Coord{i,j});
+        }
+    }
+    
+    if(free_coords.size()==0){
+        return;
+    }
+    else{
+        auto cur_pos=std::rand()%(free_coords.size()-1);
+        auto c=free_coords.at(cur_pos);
+        m_map[c.x][c.y]=XOTypes::O;
+        m_user=XOTypes::X;
+    }
 }
 
 void TicTacGameState::OnRender(SDL_Surface* Surf_Display) {
