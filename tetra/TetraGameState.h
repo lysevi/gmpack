@@ -42,6 +42,7 @@ public:
     void OnRender(SDL_Surface* Surf_Display);
     void OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 private:
+    void drawBlock(int x, int y, SDL_Surface*surface);
     block_type getRandomBlockType()const;
     void writeOnMap(const CoordList& coords, int value);
     CoordList getBlockCoord(int line, int column)const;

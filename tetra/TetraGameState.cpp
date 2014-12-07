@@ -82,17 +82,30 @@ void TetraGameState::OnRender(SDL_Surface* Surf_Display) {
             auto x = j*block_width;
             auto y = i*block_width;
 
-            SDL_Rect block_rect;
-            block_rect.h = block_width;
-            block_rect.w = block_width;
-            block_rect.x = x;
-            block_rect.y = y;
-
-            auto blck_clr = SDL_MapRGB(Surf_Display->format, 0, 0, 0);
-            SDL_FillRect(Surf_Display, &block_rect, blck_clr);
+            drawBlock(x,y,Surf_Display);
         }
     }
 }
+
+void TetraGameState::drawBlock(int x, int y, SDL_Surface*surface) {
+    static auto blck_brdr = SDL_MapRGB(surface->format, 0, 0, 100);
+    static auto blck_clr = SDL_MapRGB(surface->format, 116, 64, 79);
+
+    // border
+    SDL_Rect block_rect;
+    block_rect.h = block_width;
+    block_rect.w = block_width;
+    block_rect.x = x;
+    block_rect.y = y;
+    SDL_FillRect(surface, &block_rect, blck_brdr);
+
+    //background
+    block_rect.h = block_width-2;
+    block_rect.w = block_width-2;
+    block_rect.x = x+1;
+    block_rect.y = y+1;
+    SDL_FillRect(surface, &block_rect, blck_clr);
+};
 
 void TetraGameState::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 
