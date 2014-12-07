@@ -11,12 +11,12 @@
 #include <Coord.h>
 #include <list>
 
-const int map_width=10;
-const int map_height=20;
-const int block_width=30;
+const int map_width = 10;
+const int map_height = 20;
+const int block_width = 30;
 
-enum block_type{
-    I=1,
+enum block_type {
+    I = 1,
     J,
     L,
     O,
@@ -28,7 +28,7 @@ enum block_type{
 
 typedef std::list<core::Coord> CoordList;
 
-class TetraGameState: public AppState {
+class TetraGameState : public AppState {
     char m_map[map_height][map_width];
     block_type m_curtype;
     int blck_line, blck_column, shift;
@@ -43,8 +43,8 @@ public:
     void OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 private:
     block_type getRandomBlockType()const;
-    void writeOnMap(const CoordList& coords,int value);
-    CoordList getBlockCoord(int line,int column)const;
+    void writeOnMap(const CoordList& coords, int value);
+    CoordList getBlockCoord(int line, int column)const;
     bool isBottom(const CoordList&coords);
 };
 

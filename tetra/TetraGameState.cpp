@@ -24,7 +24,7 @@ TetraGameState::TetraGameState() {
     blck_line = 0;
     blck_column = static_cast<int> (map_width / 2);
     m_curtype = getRandomBlockType();
-    writeOnMap(getBlockCoord(blck_line,blck_column),1);
+    writeOnMap(getBlockCoord(blck_line, blck_column), 1);
 }
 
 void TetraGameState::OnActivate() {
@@ -40,26 +40,26 @@ void TetraGameState::OnLoop() {
         CurTime = SDL_GetTicks();
     } else if (MoveTime + CurTime < SDL_GetTicks()) {
         CurTime = SDL_GetTicks();
-        
-        writeOnMap(getBlockCoord(blck_line,blck_column),0);
 
-        if(shift!=0){
-            blck_column+=shift;
-            shift=0;
+        writeOnMap(getBlockCoord(blck_line, blck_column), 0);
+
+        if (shift != 0) {
+            blck_column += shift;
+            shift = 0;
         }
 
-        auto next_coords=getBlockCoord(blck_line+1,blck_column);
-        if(isBottom(next_coords)){
-            writeOnMap(getBlockCoord(blck_line,blck_column),1);
-            m_curtype=getRandomBlockType();
-            blck_line=0;
-			blck_column = static_cast<int> (map_width / 2);
-            next_coords=getBlockCoord(blck_line,blck_column);
-        }else{
+        auto next_coords = getBlockCoord(blck_line + 1, blck_column);
+        if (isBottom(next_coords)) {
+            writeOnMap(getBlockCoord(blck_line, blck_column), 1);
+            m_curtype = getRandomBlockType();
+            blck_line = 0;
+            blck_column = static_cast<int> (map_width / 2);
+            next_coords = getBlockCoord(blck_line, blck_column);
+        } else {
             blck_line++;
         }
-        
-        writeOnMap(next_coords,1);
+
+        writeOnMap(next_coords, 1);
     }
 }
 
@@ -94,14 +94,14 @@ void TetraGameState::OnRender(SDL_Surface* Surf_Display) {
     }
 }
 
-void TetraGameState::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode){
-    
-    if(sym == SDLKey::SDLK_LEFT){
-        shift=-1;
+void TetraGameState::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
+
+    if (sym == SDLKey::SDLK_LEFT) {
+        shift = -1;
     }
-    
-    if(sym == SDLKey::SDLK_RIGHT){
-        shift= 1;
+
+    if (sym == SDLKey::SDLK_RIGHT) {
+        shift = 1;
     }
 }
 
@@ -111,69 +111,69 @@ block_type TetraGameState::getRandomBlockType()const {
     return rnd_result;
 }
 
-void TetraGameState::writeOnMap(const CoordList& coords,int value) {
+void TetraGameState::writeOnMap(const CoordList& coords, int value) {
     //logger << "x=" << blck_x << " y=" << blck_y << " type=" << m_curtype<<endl;
-    for(auto c:coords){
-        m_map[c.x][c.y]=value;
+    for (auto c:coords) {
+        m_map[c.x][c.y] = value;
     }
-    
+
 }
 
-CoordList TetraGameState::getBlockCoord(int line,int column)const{
+CoordList TetraGameState::getBlockCoord(int line, int column)const {
     std::list<core::Coord> result;
     if (m_curtype == block_type::I) {
-        result.push_back({line+1,column});
-        result.push_back({line+1,column + 1});
-        result.push_back({line+1,column + 2});
-        result.push_back({line+1,column + 3});
+        result.push_back({line + 1, column});
+        result.push_back({line + 1, column + 1});
+        result.push_back({line + 1, column + 2});
+        result.push_back({line + 1, column + 3});
     }
 
     if (m_curtype == block_type::J) {
-        result.push_back({line,column});
-        result.push_back({line + 1,column});
-        result.push_back({line + 1,column + 1});
-        result.push_back({line + 1,column + 2});
+        result.push_back({line, column});
+        result.push_back({line + 1, column});
+        result.push_back({line + 1, column + 1});
+        result.push_back({line + 1, column + 2});
     }
 
     if (m_curtype == block_type::L) {
-        result.push_back({line,column});
-        result.push_back({line + 1,column});
-        result.push_back({line + 1,column + 1});
-        result.push_back({line + 1,column + 2});
+        result.push_back({line, column});
+        result.push_back({line + 1, column});
+        result.push_back({line + 1, column + 1});
+        result.push_back({line + 1, column + 2});
     }
 
     if (m_curtype == block_type::O) {
-        result.push_back({line,column});
-        result.push_back({line,column + 1});
-        result.push_back({line + 1,column});
-        result.push_back({line + 1,column + 1});
+        result.push_back({line, column});
+        result.push_back({line, column + 1});
+        result.push_back({line + 1, column});
+        result.push_back({line + 1, column + 1});
     }
 
     if (m_curtype == block_type::S) {
-        result.push_back({line,column});
-        result.push_back({line,column + 1});
-        result.push_back({line + 1,column});
-        result.push_back({line + 1,column - 1});
+        result.push_back({line, column});
+        result.push_back({line, column + 1});
+        result.push_back({line + 1, column});
+        result.push_back({line + 1, column - 1});
     }
 
     if (m_curtype == block_type::T) {
-        result.push_back({line,column});
-        result.push_back({line + 1,column});
-        result.push_back({line + 1,column + 1});
-        result.push_back({line + 1,column - 1});
+        result.push_back({line, column});
+        result.push_back({line + 1, column});
+        result.push_back({line + 1, column + 1});
+        result.push_back({line + 1, column - 1});
     }
 
     if (m_curtype == block_type::Z) {
-        result.push_back({line,column});
-        result.push_back({line,column - 1});
-        result.push_back({line + 1,column});
-        result.push_back({line + 1,column + 1});
+        result.push_back({line, column});
+        result.push_back({line, column - 1});
+        result.push_back({line + 1, column});
+        result.push_back({line + 1, column + 1});
     }
     return result;
 }
 
-bool TetraGameState::isBottom(const CoordList&coords){
-    return std::any_of(coords.cbegin(), coords.cend(),[&m_map](const core::Coord c){
-        return (c.x==map_height)||(m_map[c.x][c.y]!=0);
+bool TetraGameState::isBottom(const CoordList&coords) {
+    return std::any_of(coords.cbegin(), coords.cend(), [&m_map](const core::Coord c) {
+        return (c.x == map_height) || (m_map[c.x][c.y] != 0);
     });
 }
