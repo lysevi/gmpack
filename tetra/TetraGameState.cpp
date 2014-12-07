@@ -53,6 +53,7 @@ void TetraGameState::OnLoop() {
             writeOnMap(getBlockCoord(blck_line,blck_column),1);
             m_curtype=getRandomBlockType();
             blck_line=0;
+			blck_column = static_cast<int> (map_width / 2);
             next_coords=getBlockCoord(blck_line,blck_column);
         }else{
             blck_line++;
