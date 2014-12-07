@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <cassert>
 #include <algorithm>
+#include <list>
 
 TetraGameState::TetraGameState() {
     srand(time(0));
@@ -23,7 +24,8 @@ TetraGameState::TetraGameState() {
     MoveTime = 500;
     blck_line = 0;
     blck_column = static_cast<int> (map_width / 2);
-    m_curtype = getRandomBlockType();
+    rotated = false;
+    m_curtype =  getRandomBlockType();
     writeOnMap(getBlockCoord(blck_line, blck_column), 1);
 }
 
@@ -41,10 +43,30 @@ void TetraGameState::OnLoop() {
     } else if (MoveTime + CurTime < SDL_GetTicks()) {
         CurTime = SDL_GetTicks();
 
-        writeOnMap(getBlockCoord(blck_line, blck_column), 0);
+        writeOnMap(prev_coords, 0);
 
         if (shift != 0) {
-            blck_column += shift;
+            auto coords_if_can_move = getBlockCoord(blck_line, blck_column + shift);
+            /*coords_if_can_move.sort([](const core::Coord&left,const core::Coord&right)
+            {
+                return left.x<right.y;
+            });*/
+            bool canMove = std::all_of(
+                    coords_if_can_move.cbegin(),
+                    coords_if_can_move.cend(),
+                    [&m_map,shift](const core::Coord & c) {
+                        if((shift<0)&&((m_map[c.x][c.y]!=0) ||(c.y<0)))
+                            return false;
+                        
+                        if((shift>0)&&((m_map[c.x][c.y]!=0) ||(c.y==map_width)))
+                            return false;
+                        
+                        return true;
+                    });
+            logger<<"canMove="<<canMove<<endl;
+            if (canMove) {
+                blck_column += shift;
+            }
             shift = 0;
         }
 
@@ -55,6 +77,7 @@ void TetraGameState::OnLoop() {
             blck_line = 0;
             blck_column = static_cast<int> (map_width / 2);
             next_coords = getBlockCoord(blck_line, blck_column);
+            moveDownIfFull();
         } else {
             blck_line++;
         }
@@ -82,7 +105,7 @@ void TetraGameState::OnRender(SDL_Surface* Surf_Display) {
             auto x = j*block_width;
             auto y = i*block_width;
 
-            drawBlock(x,y,Surf_Display);
+            drawBlock(x, y, Surf_Display);
         }
     }
 }
@@ -100,14 +123,20 @@ void TetraGameState::drawBlock(int x, int y, SDL_Surface*surface) {
     SDL_FillRect(surface, &block_rect, blck_brdr);
 
     //background
-    block_rect.h = block_width-2;
-    block_rect.w = block_width-2;
-    block_rect.x = x+1;
-    block_rect.y = y+1;
+    block_rect.h = block_width - 2;
+    block_rect.w = block_width - 2;
+    block_rect.x = x + 1;
+    block_rect.y = y + 1;
     SDL_FillRect(surface, &block_rect, blck_clr);
 };
 
 void TetraGameState::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
+    if (sym == SDLKey::SDLK_ESCAPE) {
+        exit(0);
+    }
+    if (sym == SDLKey::SDLK_UP) {
+        rotated = !rotated;
+    }
 
     if (sym == SDLKey::SDLK_LEFT) {
         shift = -1;
@@ -125,7 +154,7 @@ block_type TetraGameState::getRandomBlockType()const {
 }
 
 void TetraGameState::writeOnMap(const CoordList& coords, int value) {
-    //logger << "x=" << blck_x << " y=" << blck_y << " type=" << m_curtype<<endl;
+    prev_coords = coords;
     for (auto c:coords) {
         m_map[c.x][c.y] = value;
     }
@@ -135,24 +164,45 @@ void TetraGameState::writeOnMap(const CoordList& coords, int value) {
 CoordList TetraGameState::getBlockCoord(int line, int column)const {
     std::list<core::Coord> result;
     if (m_curtype == block_type::I) {
-        result.push_back({line + 1, column});
-        result.push_back({line + 1, column + 1});
-        result.push_back({line + 1, column + 2});
-        result.push_back({line + 1, column + 3});
+        if (!rotated) {
+            result.push_back({line + 1, column});
+            result.push_back({line + 1, column + 1});
+            result.push_back({line + 1, column + 2});
+            result.push_back({line + 1, column + 3});
+        } else {
+            result.push_back({line, column});
+            result.push_back({line + 1, column});
+            result.push_back({line + 2, column});
+            result.push_back({line + 3, column});
+        }
     }
 
     if (m_curtype == block_type::J) {
-        result.push_back({line, column});
-        result.push_back({line + 1, column});
-        result.push_back({line + 1, column + 1});
-        result.push_back({line + 1, column + 2});
+        if (!rotated) {
+            result.push_back({line, column});
+            result.push_back({line + 1, column});
+            result.push_back({line + 1, column + 1});
+            result.push_back({line + 1, column + 2});
+        } else {
+            result.push_back({line, column});
+            result.push_back({line + 1, column});
+            result.push_back({line + 2, column});
+            result.push_back({line + 2, column - 1});
+        }
     }
 
     if (m_curtype == block_type::L) {
-        result.push_back({line, column});
-        result.push_back({line + 1, column});
-        result.push_back({line + 1, column + 1});
-        result.push_back({line + 1, column + 2});
+        if (!rotated) {
+            result.push_back({line, column});
+            result.push_back({line + 1, column});
+            result.push_back({line + 1, column - 1});
+            result.push_back({line + 1, column - 2});
+        } else {
+            result.push_back({line, column - 1});
+            result.push_back({line, column});
+            result.push_back({line + 1, column});
+            result.push_back({line + 2, column});
+        }
     }
 
     if (m_curtype == block_type::O) {
@@ -163,24 +213,45 @@ CoordList TetraGameState::getBlockCoord(int line, int column)const {
     }
 
     if (m_curtype == block_type::S) {
-        result.push_back({line, column});
-        result.push_back({line, column + 1});
-        result.push_back({line + 1, column});
-        result.push_back({line + 1, column - 1});
+        if (!rotated) {
+            result.push_back({line, column});
+            result.push_back({line, column + 1});
+            result.push_back({line + 1, column});
+            result.push_back({line + 1, column - 1});
+        } else {
+            result.push_back({line, column});
+            result.push_back({line + 1, column});
+            result.push_back({line + 1, column + 1});
+            result.push_back({line + 2, column + 1});
+        }
     }
 
     if (m_curtype == block_type::T) {
-        result.push_back({line, column});
-        result.push_back({line + 1, column});
-        result.push_back({line + 1, column + 1});
-        result.push_back({line + 1, column - 1});
+        if (!rotated) {
+            result.push_back({line, column});
+            result.push_back({line + 1, column});
+            result.push_back({line + 1, column + 1});
+            result.push_back({line + 1, column - 1});
+        } else {
+            result.push_back({line, column});
+            result.push_back({line + 1, column});
+            result.push_back({line + 2, column});
+            result.push_back({line + 1, column - 1});
+        }
     }
 
     if (m_curtype == block_type::Z) {
-        result.push_back({line, column});
-        result.push_back({line, column - 1});
-        result.push_back({line + 1, column});
-        result.push_back({line + 1, column + 1});
+        if (!rotated) {
+            result.push_back({line, column});
+            result.push_back({line, column - 1});
+            result.push_back({line + 1, column});
+            result.push_back({line + 1, column + 1});
+        } else {
+            result.push_back({line, column});
+            result.push_back({line + 1, column});
+            result.push_back({line + 1, column - 1});
+            result.push_back({line + 2, column - 1});
+        }
     }
     return result;
 }
@@ -189,4 +260,32 @@ bool TetraGameState::isBottom(const CoordList&coords) {
     return std::any_of(coords.cbegin(), coords.cend(), [&m_map](const core::Coord c) {
         return (c.x == map_height) || (m_map[c.x][c.y] != 0);
     });
+}
+
+void TetraGameState::moveDownIfFull(){
+    std::list<int> line2clean;
+    for(int i=0;i<map_height;++i){
+        bool removeCurent=true;
+        for(int j=0;j<map_width;++j){
+            if(m_map[i][j]==0){
+                removeCurent=false;
+                break;
+            }
+        }
+        if(removeCurent){
+            line2clean.push_back(i);
+        }
+    }
+    // сдвигаем всё что выше
+    line2clean.sort();
+    for(auto lineNum:line2clean){
+        for(int j=0;j<map_width;++j)
+            m_map[lineNum][j]=0;
+        for(int i=lineNum;i>1;i--){
+            for(int j=0;j<map_width;++j)
+                m_map[i][j]=m_map[i-1][j];
+        }
+    }
+
+    
 }

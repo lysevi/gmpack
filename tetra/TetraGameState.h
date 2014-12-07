@@ -34,6 +34,8 @@ class TetraGameState : public core::AppState {
     int blck_line, blck_column, shift;
     int MoveTime;
     int CurTime;
+    bool rotated;
+    CoordList prev_coords;
 public:
     TetraGameState();
     void OnActivate();
@@ -47,5 +49,6 @@ private:
     void writeOnMap(const CoordList& coords, int value);
     CoordList getBlockCoord(int line, int column)const;
     bool isBottom(const CoordList&coords);
+    void moveDownIfFull();
 };
 
