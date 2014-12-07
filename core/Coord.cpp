@@ -19,8 +19,5 @@ namespace core {
         y = 0;
     }
 
-    Coord::Coord(const Coord& orig) {
-        x = orig.x;
-        y = orig.y;
-    }
+    
 }

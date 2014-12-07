@@ -13,7 +13,7 @@ namespace core {
     struct Coord {
         Coord(int x, int y);
         Coord();
-        Coord(const Coord& orig);
+       
 
         int x;
         int y;
