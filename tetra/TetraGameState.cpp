@@ -46,25 +46,7 @@ void TetraGameState::OnLoop() {
         writeOnMap(prev_coords, 0);
 
         if (shift != 0) {
-            auto coords_if_can_move = getBlockCoord(blck_line, blck_column + shift);
-            /*coords_if_can_move.sort([](const core::Coord&left,const core::Coord&right)
-            {
-                return left.x<right.y;
-            });*/
-            bool canMove = std::all_of(
-                    coords_if_can_move.cbegin(),
-                    coords_if_can_move.cend(),
-                    [&m_map,shift](const core::Coord & c) {
-                        if((shift<0)&&((m_map[c.x][c.y]!=0) ||(c.y<0)))
-                            return false;
-                        
-                        if((shift>0)&&((m_map[c.x][c.y]!=0) ||(c.y==map_width)))
-                            return false;
-                        
-                        return true;
-                    });
-            logger<<"canMove="<<canMove<<endl;
-            if (canMove) {
+            if (canMove(shift)) {
                 blck_column += shift;
             }
             shift = 0;
@@ -285,7 +267,23 @@ void TetraGameState::moveDownIfFull(){
             for(int j=0;j<map_width;++j)
                 m_map[i][j]=m_map[i-1][j];
         }
-    }
+    }   
+}
 
-    
+bool TetraGameState::canMove(int _shift) {
+    auto coords_if_can_move = getBlockCoord(blck_line, blck_column + _shift);
+    bool result = std::all_of(
+            coords_if_can_move.cbegin(),
+            coords_if_can_move.cend(),
+            [&m_map, _shift](const core::Coord & c) {
+                // уперлисб слева
+                if ((_shift < 0)&&((m_map[c.x][c.y] != 0) || (c.y < 0)))
+                    return false;
+                // уперлись справа
+                if ((_shift > 0)&&((m_map[c.x][c.y] != 0) || (c.y == map_width)))
+                    return false;
+
+                return true;
+            });
+    return result;
 }

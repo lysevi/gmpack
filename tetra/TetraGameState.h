@@ -50,5 +50,6 @@ private:
     CoordList getBlockCoord(int line, int column)const;
     bool isBottom(const CoordList&coords);
     void moveDownIfFull();
+    bool canMove(int shift);
 };
 
