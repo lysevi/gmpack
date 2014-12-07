@@ -10,6 +10,7 @@
 #include <ProcessLogger.h>
 #include <cstdlib>
 #include <cassert>
+#include <algorithm>
 
 TetraGameState::TetraGameState() {
     srand(time(0));
@@ -20,10 +21,10 @@ TetraGameState::TetraGameState() {
     }
     CurTime = 0;
     MoveTime = 500;
-    blck_x = 0;
-    blck_y = static_cast<int> (map_width / 2);
+    blck_line = 0;
+    blck_column = static_cast<int> (map_width / 2);
     m_curtype = getRandomBlockType();
-    writeOnMap(getBlockCoord(blck_x,blck_y),1);
+    writeOnMap(getBlockCoord(blck_line,blck_column),1);
 }
 
 void TetraGameState::OnActivate() {
@@ -39,19 +40,25 @@ void TetraGameState::OnLoop() {
         CurTime = SDL_GetTicks();
     } else if (MoveTime + CurTime < SDL_GetTicks()) {
         CurTime = SDL_GetTicks();
-        writeOnMap(getBlockCoord(blck_x,blck_y),0);
-        if(isBottom()){
-            m_curtype=getRandomBlockType();
-            blck_x=0;
-        }
-        else{
-            blck_x++;
-        }
+        
+        writeOnMap(getBlockCoord(blck_line,blck_column),0);
+
         if(shift!=0){
-            blck_y+=shift;
+            blck_column+=shift;
             shift=0;
         }
-        writeOnMap(getBlockCoord(blck_x,blck_y),1);
+
+        auto next_coords=getBlockCoord(blck_line+1,blck_column);
+        if(isBottom(next_coords)){
+            writeOnMap(getBlockCoord(blck_line,blck_column),1);
+            m_curtype=getRandomBlockType();
+            blck_line=0;
+            next_coords=getBlockCoord(blck_line,blck_column);
+        }else{
+            blck_line++;
+        }
+        
+        writeOnMap(next_coords,1);
     }
 }
 
@@ -103,18 +110,15 @@ block_type TetraGameState::getRandomBlockType()const {
     return rnd_result;
 }
 
-void TetraGameState::writeOnMap(std::list<core::Coord> coords,int value) {
+void TetraGameState::writeOnMap(const CoordList& coords,int value) {
     //logger << "x=" << blck_x << " y=" << blck_y << " type=" << m_curtype<<endl;
-    if(isBottom()){
-        return;
-    }
     for(auto c:coords){
         m_map[c.x][c.y]=value;
     }
     
 }
 
-std::list<core::Coord> TetraGameState::getBlockCoord(int line,int column)const{
+CoordList TetraGameState::getBlockCoord(int line,int column)const{
     std::list<core::Coord> result;
     if (m_curtype == block_type::I) {
         result.push_back({line+1,column});
@@ -167,7 +171,8 @@ std::list<core::Coord> TetraGameState::getBlockCoord(int line,int column)const{
     return result;
 }
 
-bool TetraGameState::isBottom(){
-    return  blck_x==map_height-1;
-
+bool TetraGameState::isBottom(const CoordList&coords){
+    return std::any_of(coords.cbegin(), coords.cend(),[&m_map](const core::Coord c){
+        return (c.x==map_height)||(m_map[c.x][c.y]!=0);
+    });
 }

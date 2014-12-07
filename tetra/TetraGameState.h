@@ -26,10 +26,12 @@ enum block_type{
     End
 };
 
+typedef std::list<core::Coord> CoordList;
+
 class TetraGameState: public AppState {
     char m_map[map_height][map_width];
     block_type m_curtype;
-    int blck_x, blck_y, shift;
+    int blck_line, blck_column, shift;
     int MoveTime;
     int CurTime;
 public:
@@ -41,8 +43,8 @@ public:
     void OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 private:
     block_type getRandomBlockType()const;
-    void writeOnMap(std::list<core::Coord> coords,int value);
-    std::list<core::Coord> getBlockCoord(int line,int column)const;
-    bool isBottom();
+    void writeOnMap(const CoordList& coords,int value);
+    CoordList getBlockCoord(int line,int column)const;
+    bool isBottom(const CoordList&coords);
 };
 
