@@ -35,6 +35,7 @@ class TetraGameState : public core::AppState {
     int MoveTime;
     int CurTime;
     bool rotated;
+    int scores;
     CoordList prev_coords;
 public:
     TetraGameState();

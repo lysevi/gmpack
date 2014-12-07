@@ -38,6 +38,7 @@ void TetraGameState::OnDeactivate() {
 }
 
 void TetraGameState::OnLoop() {
+    logger<<"score: "<<scores<<endl;
     if (CurTime == 0) {
         CurTime = SDL_GetTicks();
     } else if (MoveTime + CurTime < SDL_GetTicks()) {
@@ -258,6 +259,7 @@ void TetraGameState::moveDownIfFull(){
             line2clean.push_back(i);
         }
     }
+    scores+=line2clean.size();
     // сдвигаем всё что выше
     line2clean.sort();
     for(auto lineNum:line2clean){
