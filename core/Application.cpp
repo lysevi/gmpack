@@ -11,6 +11,8 @@
 #include "Surface.h"
 #include "FPS.h"
 
+using namespace core;
+
 Application::Application(int width, int height) {
     Surf_Display = NULL;
     Running = true;

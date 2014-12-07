@@ -14,16 +14,8 @@ namespace core {
     public:
         Size(int width, int height);
         Size();
-        Size(const Size& orig);
-        virtual ~Size();
 
-        int getWidth()const;
-        int setWidth(int width);
-
-        int getHeight()const;
-        int setHeight(int height);
-    private:
-        int m_width, m_height;
+        int width, height;
     };
 }
 #endif	/* COORD_H */

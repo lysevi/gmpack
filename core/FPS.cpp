@@ -6,7 +6,7 @@
  */
 
 #include "FPS.h"
-
+using namespace core;
 FPS FPS::FPSControl;
 
 FPS::FPS() {

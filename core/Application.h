@@ -4,35 +4,38 @@
 #include "Event.h"
 #include <string>
 
-class Application : public Event {
-private:
-    bool Running;
+namespace core {
 
-    SDL_Surface* Surf_Display;
-    int m_width;
-    int m_height;
-public:
-    Application(int width, int height);
+    class Application : public Event {
+    private:
+        bool Running;
 
-    int OnExecute();
+        SDL_Surface* Surf_Display;
+        int m_width;
+        int m_height;
+    public:
+        Application(int width, int height);
 
-public:
+        int OnExecute();
 
-    bool OnInit();
+    public:
 
-    void OnExit();
+        bool OnInit();
 
-    void OnEvent(SDL_Event* Event);
+        void OnExit();
 
-    void OnLoop();
+        void OnEvent(SDL_Event* Event);
 
-    void OnRender();
+        void OnLoop();
 
-    void OnCleanup();
+        void OnRender();
 
-    void OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Right, bool Middle);
-    void OnLButtonDown(int mX, int mY);
-    void OnRButtonDown(int mX, int mY);
-private:
-    SDL_Surface* loadImage(const std::string fName);
-};
+        void OnCleanup();
+
+        void OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Right, bool Middle);
+        void OnLButtonDown(int mX, int mY);
+        void OnRButtonDown(int mX, int mY);
+    private:
+        SDL_Surface* loadImage(const std::string fName);
+    };
+}

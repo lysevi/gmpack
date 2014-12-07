@@ -1,7 +1,7 @@
 #include <SDL/SDL.h>
 
 #include "Animation.h"
-
+using namespace core;
 Animation::Animation() {
     CurrentFrame = 0;
     MaxFrames = 0;

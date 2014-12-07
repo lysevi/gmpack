@@ -10,36 +10,12 @@
 namespace core {
 
     Size::Size(int x, int y) {
-        m_width = x;
-        m_height = y;
+        width = x;
+        height = y;
     }
 
     Size::Size() {
-        m_width = 0;
-        m_height = 0;
-    }
-
-    Size::Size(const Size& orig) {
-        m_width = orig.m_width;
-        m_height = orig.m_height;
-    }
-
-    Size::~Size() {
-    }
-
-    int Size::getWidth()const {
-        return m_width;
-    }
-
-    int Size::setWidth(int width) {
-        m_width = width;
-    }
-
-    int Size::getHeight()const {
-        return m_height;
-    }
-
-    int Size::setHeight(int height) {
-        m_height = height;
+        width = -1;
+        height = -1;
     }
 }

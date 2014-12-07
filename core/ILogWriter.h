@@ -9,7 +9,7 @@
 
 #include <ostream>
 
-namespace utils {
+namespace core {
 
     class ILogWriter {
     public:

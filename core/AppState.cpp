@@ -7,6 +7,8 @@
 
 #include "AppState.h"
 
+using namespace core;
+
 AppState::AppState() {
 }
 

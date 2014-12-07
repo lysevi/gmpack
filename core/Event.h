@@ -1,8 +1,7 @@
-#ifndef CEVENT_H
-#define CEVENT_H
+#pragma once
 
 #include <SDL/SDL.h>
-
+namespace core{
 class Event {
 public:
     Event();
@@ -61,4 +60,4 @@ public:
 
     virtual void OnUser(Uint8 type, int code, void* data1, void* data2);
 };
-#endif // CEVENT_H
+}

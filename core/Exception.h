@@ -9,64 +9,66 @@
 #include <string>
 #include "ProcessLogger.h"
 #include <stdexcept>
+namespace core {
 
-struct CodePosition {
+    struct CodePosition {
 
-    CodePosition(const char* file, int line, const char* function)
-    : File(file), Line(line), Function(function) {
-    }
-    const char* File;
-    const int Line;
-    const char* Function;
+        CodePosition(const char* file, int line, const char* function)
+        : File(file), Line(line), Function(function) {
+        }
+        const char* File;
+        const int Line;
+        const char* Function;
 
-    std::string toString()const;
-};
+        std::string toString()const;
+    };
 
 #define POSITION (CodePosition(__FILE__, __LINE__, __FUNCTION__))
 
-class Exception : public std::exception {
-public:
+    class Exception : public std::exception {
+    public:
 
-    inline static Exception CreateAndLog(const CodePosition& pos) {
-        logger << "FATAL ERROR. The Exception will be thrown! "
-                << pos.toString()
-                << endl;
-        return Exception();
-    }
+        inline static Exception CreateAndLog(const CodePosition& pos) {
+            logger << "FATAL ERROR. The Exception will be thrown! "
+                    << pos.toString()
+                    << endl;
+            return Exception();
+        }
 
-    inline static Exception CreateAndLog(const CodePosition& pos, const std::string& message) {
-        logger << "FATAL ERROR. The Exception will be thrown! "
-                << pos.toString()
-                << " Message: "
-                << message
-                << endl;
-        return Exception(message);
-    }
+        inline static Exception CreateAndLog(const CodePosition& pos, const std::string& message) {
+            logger << "FATAL ERROR. The Exception will be thrown! "
+                    << pos.toString()
+                    << " Message: "
+                    << message
+                    << endl;
+            return Exception(message);
+        }
 
-public:
+    public:
 
-    virtual const char* what() const throw () {
-        return _message.c_str();
-    }
+        virtual const char* what() const throw () {
+            return _message.c_str();
+        }
 
-    const std::string& GetErrorMessage() const {
-        return _message;
-    }
+        const std::string& GetErrorMessage() const {
+            return _message;
+        }
 
-    ~Exception() throw () {
+        ~Exception() throw () {
+        };
+
+    protected:
+
+        Exception() {
+        }
+
+        Exception(const char*& message) : _message(std::string(message)) {
+        }
+
+        Exception(const std::string& message) : _message(message) {
+        }
+
+    private:
+        std::string _message;
     };
-
-protected:
-
-    Exception() {
-    }
-
-    Exception(const char*& message) : _message(std::string(message)) {
-    }
-
-    Exception(const std::string& message) : _message(message) {
-    }
-
-private:
-    std::string _message;
-};
+}

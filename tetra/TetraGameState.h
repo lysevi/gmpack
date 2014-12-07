@@ -28,7 +28,7 @@ enum block_type {
 
 typedef std::list<core::Coord> CoordList;
 
-class TetraGameState : public AppState {
+class TetraGameState : public core::AppState {
     char m_map[map_height][map_width];
     block_type m_curtype;
     int blck_line, blck_column, shift;

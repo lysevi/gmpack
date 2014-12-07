@@ -15,7 +15,7 @@ enum XOTypes{
     O
 };
 
-class TicTacGameState : public AppState {
+class TicTacGameState : public core::AppState {
     SDL_Surface* m_bg;
     SDL_Surface* m_x;
     SDL_Surface* m_o;

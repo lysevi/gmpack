@@ -8,7 +8,7 @@
 #include "ProcessLogger.h"
 #include <iostream>
 
-using namespace utils;
+using namespace core;
 
 ProcessLogger* ProcessLogger::m_instance;
 

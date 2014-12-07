@@ -9,18 +9,19 @@
 
 #include "AppState.h"
 #include "Surface.h"
+namespace core {
 
-class AppStateIntro : public AppState {
-private:
-    SDL_Surface* Surf_Logo;
-    int StartTime;
-    std::string m_FileName;
-    uint m_time;
-public:
-    AppStateIntro(const std::string FileName, uint _time=3000);
-    void OnActivate();
-    void OnDeactivate();
-    void OnLoop();
-    void OnRender(SDL_Surface* Surf_Display);
-};
-
+    class AppStateIntro : public AppState {
+    private:
+        SDL_Surface* Surf_Logo;
+        int StartTime;
+        std::string m_FileName;
+        uint m_time;
+    public:
+        AppStateIntro(const std::string FileName, uint _time = 3000);
+        void OnActivate();
+        void OnDeactivate();
+        void OnLoop();
+        void OnRender(SDL_Surface* Surf_Display);
+    };
+}

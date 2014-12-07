@@ -8,27 +8,29 @@
 #pragma once
 
 #include <SDL/SDL.h>
+namespace core {
 
-class FPS {
-public:
-    static FPS FPSControl;
+    class FPS {
+    public:
+        static FPS FPSControl;
 
-private:
-    int OldTime;
-    int LastTime;
+    private:
+        int OldTime;
+        int LastTime;
 
-    float SpeedFactor;
+        float SpeedFactor;
 
-    int NumFrames;
-    int Frames;
+        int NumFrames;
+        int Frames;
 
-public:
-    FPS();
+    public:
+        FPS();
 
-    void OnLoop();
+        void OnLoop();
 
-public:
-    int GetFPS();
+    public:
+        int GetFPS();
 
-    float GetSpeedFactor();
-};
+        float GetSpeedFactor();
+    };
+}

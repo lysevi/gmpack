@@ -6,6 +6,8 @@
 #include "ProcessLogger.h"
 #include "Exception.h"
 
+using namespace core;
+
 Surface::Surface() {
 }
 

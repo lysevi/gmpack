@@ -8,7 +8,7 @@
 #include "AppStateIntro.h"
 #include "AppStateManager.h"
 #include "ProcessLogger.h"
-
+using namespace core;
 AppStateIntro::AppStateIntro(const std::string FileName, uint _time) {
     Surf_Logo = NULL;
     m_FileName = FileName;

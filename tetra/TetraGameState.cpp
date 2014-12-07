@@ -64,7 +64,7 @@ void TetraGameState::OnLoop() {
 }
 
 void TetraGameState::OnRender(SDL_Surface* Surf_Display) {
-    Surface::ClearSurface(Surf_Display, 0);
+    core::Surface::ClearSurface(Surf_Display, 0);
 
     SDL_Rect dstrect;
     dstrect.h = block_width*map_height;

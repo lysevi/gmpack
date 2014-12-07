@@ -17,11 +17,11 @@ TicTacGameState::TicTacGameState() {
 }
 
 void TicTacGameState::OnActivate() {
-    m_bg = Surface::OnLoad("tic_tac/img/bg.bmp");
-    m_x = Surface::OnLoad("tic_tac/img/x.bmp");
-    m_o = Surface::OnLoad("tic_tac/img/o.bmp");
-    Surface::Transparent(m_x,255,255,255);
-    Surface::Transparent(m_o,255,255,255);
+    m_bg = core::Surface::OnLoad("tic_tac/img/bg.bmp");
+    m_x = core::Surface::OnLoad("tic_tac/img/x.bmp");
+    m_o = core::Surface::OnLoad("tic_tac/img/o.bmp");
+    core::Surface::Transparent(m_x,255,255,255);
+    core::Surface::Transparent(m_o,255,255,255);
     m_user=XOTypes::X;
     m_winer=XOTypes::None;
     for(int i=0;i<3;++i){
@@ -60,7 +60,7 @@ void TicTacGameState::OnLoop() {
 
 void TicTacGameState::OnRender(SDL_Surface* Surf_Display) {
     //logger << "TicTacGameState::OnRender" << endl;
-    Surface::OnDraw(Surf_Display, m_bg, 0, 0);
+    core::Surface::OnDraw(Surf_Display, m_bg, 0, 0);
 
     for(int i=0;i<3;++i){
         for(int j=0;j<3;++j){
@@ -70,7 +70,7 @@ void TicTacGameState::OnRender(SDL_Surface* Surf_Display) {
             if(m_map[i][j]==XOTypes::O)
                 cur_surface=m_o;
 
-            Surface::OnDraw(Surf_Display,cur_surface,
+            core::Surface::OnDraw(Surf_Display,cur_surface,
                     i*215,j*215);
         }
     }

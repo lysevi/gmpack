@@ -1,33 +1,34 @@
-#ifndef CANIMATION_H
-#define CANIMATION_H
+#pragma once
 
-class Animation {
-private:
-    int CurrentFrame;
+namespace core {
 
-    int FrameInc;
+    class Animation {
+    private:
+        int CurrentFrame;
 
-private:
-    int FrameRate; //Milliseconds
+        int FrameInc;
 
-    long OldTime;
+    private:
+        int FrameRate; //Milliseconds
 
-public:
-    int MaxFrames;
+        long OldTime;
 
-    bool Oscillate;
+    public:
+        int MaxFrames;
 
-public:
-    Animation();
-    Animation(const Animation&orig);
+        bool Oscillate;
 
-    void OnAnimate();
+    public:
+        Animation();
+        Animation(const Animation&orig);
 
-public:
-    void SetFrameRate(int Rate);
+        void OnAnimate();
 
-    void SetCurrentFrame(int Frame);
+    public:
+        void SetFrameRate(int Rate);
 
-    int GetCurrentFrame();
-};
-#endif // CANIMATION_H
+        void SetCurrentFrame(int Frame);
+
+        int GetCurrentFrame();
+    };
+}

@@ -10,16 +10,11 @@
 namespace core {
 
     Health::Health() {
-        curHealth = maxHealth = 0;
+        curHealth = maxHealth = -1;
     }
 
     Health::Health(int _maxHealth, int _curHealth) {
         maxHealth = _maxHealth;
         curHealth = _curHealth;
-    }
-
-    Health::Health(const Health& orig) {
-        maxHealth = orig.maxHealth;
-        curHealth = orig.curHealth;
     }
 }

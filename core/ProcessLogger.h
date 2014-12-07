@@ -10,10 +10,10 @@
 #include <string>
 #include "ILogWriter.h"
 
-#define logger          utils::ProcessLogger::getInstance()->GetStream()
+#define logger          core::ProcessLogger::getInstance()->GetStream()
 
 using std::endl;
-namespace utils {
+namespace core {
 
     class ProcessLogger : public ILogWriter {
     public:

@@ -1,5 +1,5 @@
 #include "Utils.h"
 
-namespace utils {
+namespace core {
 
 }

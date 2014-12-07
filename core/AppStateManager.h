@@ -9,27 +9,29 @@
 
 #include "AppState.h"
 #include <map>
+namespace core {
 
-enum {
-    APPSTATE_NONE = 0,
-    APPSTATE_INTRO,
-    APPSTATE_GAME,
-    APPSTATE_SCORE
-};
+    enum {
+        APPSTATE_NONE = 0,
+        APPSTATE_INTRO,
+        APPSTATE_GAME,
+        APPSTATE_SCORE
+    };
 
-class AppStateManager {
-private:
-    static AppState* ActiveAppState;
-    static std::map<int, AppState*> m_states;
-public:
-    static void OnEvent(SDL_Event* Event);
-    static void OnLoop();
-    static void OnRender(SDL_Surface* Surf_Display);
+    class AppStateManager {
+    private:
+        static AppState* ActiveAppState;
+        static std::map<int, AppState*> m_states;
+    public:
+        static void OnEvent(SDL_Event* Event);
+        static void OnLoop();
+        static void OnRender(SDL_Surface* Surf_Display);
 
-public:
-    static void SetActiveAppState(int AppStateID);
-    static AppState* GetActiveAppState();
-    static void AddState(int type, AppState*st);
-private:
+    public:
+        static void SetActiveAppState(int AppStateID);
+        static AppState* GetActiveAppState();
+        static void AddState(int type, AppState*st);
+    private:
 
-};
+    };
+}

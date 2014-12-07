@@ -10,7 +10,7 @@
 #include <string>
 #include <list>
 
-namespace utils {
+namespace core {
 
     typedef std::list<std::string> StringList;
 
