@@ -8,6 +8,8 @@
 #pragma once
 
 #include <AppState.h>
+#include <Coord.h>
+#include <list>
 
 const int map_width=10;
 const int map_height=20;
@@ -27,7 +29,7 @@ enum block_type{
 class TetraGameState: public AppState {
     char m_map[map_height][map_width];
     block_type m_curtype;
-    int blck_x, blck_y;
+    int blck_x, blck_y, shift;
     int MoveTime;
     int CurTime;
 public:
@@ -36,9 +38,11 @@ public:
     void OnDeactivate();
     void OnLoop();
     void OnRender(SDL_Surface* Surf_Display);
+    void OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 private:
     block_type getRandomBlockType()const;
-    void writeOnMap();
+    void writeOnMap(std::list<core::Coord> coords,int value);
+    std::list<core::Coord> getBlockCoord(int line,int column)const;
     bool isBottom();
 };
 

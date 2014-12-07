@@ -23,7 +23,7 @@ TetraGameState::TetraGameState() {
     blck_x = 0;
     blck_y = static_cast<int> (map_width / 2);
     m_curtype = getRandomBlockType();
-    writeOnMap();
+    writeOnMap(getBlockCoord(blck_x,blck_y),1);
 }
 
 void TetraGameState::OnActivate() {
@@ -39,6 +39,7 @@ void TetraGameState::OnLoop() {
         CurTime = SDL_GetTicks();
     } else if (MoveTime + CurTime < SDL_GetTicks()) {
         CurTime = SDL_GetTicks();
+        writeOnMap(getBlockCoord(blck_x,blck_y),0);
         if(isBottom()){
             m_curtype=getRandomBlockType();
             blck_x=0;
@@ -46,7 +47,11 @@ void TetraGameState::OnLoop() {
         else{
             blck_x++;
         }
-        writeOnMap();
+        if(shift!=0){
+            blck_y+=shift;
+            shift=0;
+        }
+        writeOnMap(getBlockCoord(blck_x,blck_y),1);
     }
 }
 
@@ -81,67 +86,86 @@ void TetraGameState::OnRender(SDL_Surface* Surf_Display) {
     }
 }
 
+void TetraGameState::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode){
+    
+    if(sym == SDLKey::SDLK_LEFT){
+        shift=-1;
+    }
+    
+    if(sym == SDLKey::SDLK_RIGHT){
+        shift= 1;
+    }
+}
+
 block_type TetraGameState::getRandomBlockType()const {
     auto rnd_result = (block_type) ((rand() % (block_type::End - 1)) + 1);
     assert(rnd_result != 0);
     return rnd_result;
 }
 
-void TetraGameState::writeOnMap() {
-    logger << "x=" << blck_x << " y=" << blck_y << " type=" << m_curtype<<endl;
+void TetraGameState::writeOnMap(std::list<core::Coord> coords,int value) {
+    //logger << "x=" << blck_x << " y=" << blck_y << " type=" << m_curtype<<endl;
     if(isBottom()){
         return;
     }
+    for(auto c:coords){
+        m_map[c.x][c.y]=value;
+    }
+    
+}
+
+std::list<core::Coord> TetraGameState::getBlockCoord(int line,int column)const{
+    std::list<core::Coord> result;
     if (m_curtype == block_type::I) {
-        m_map[blck_x+1][blck_y] = 1;
-        m_map[blck_x+1][blck_y + 1] = 1;
-        m_map[blck_x+1][blck_y + 2] = 1;
-        m_map[blck_x+1][blck_y + 3] = 1;
+        result.push_back({line+1,column});
+        result.push_back({line+1,column + 1});
+        result.push_back({line+1,column + 2});
+        result.push_back({line+1,column + 3});
     }
 
     if (m_curtype == block_type::J) {
-        m_map[blck_x][blck_y] = 1;
-        m_map[blck_x + 1][blck_y] = 1;
-        m_map[blck_x + 1][blck_y + 1] = 1;
-        m_map[blck_x + 1][blck_y + 2] = 1;
+        result.push_back({line,column});
+        result.push_back({line + 1,column});
+        result.push_back({line + 1,column + 1});
+        result.push_back({line + 1,column + 2});
     }
 
     if (m_curtype == block_type::L) {
-        m_map[blck_x][blck_y] = 1;
-        m_map[blck_x + 1][blck_y] = 1;
-        m_map[blck_x + 1][blck_y + 1] = 1;
-        m_map[blck_x + 1][blck_y + 2] = 1;
+        result.push_back({line,column});
+        result.push_back({line + 1,column});
+        result.push_back({line + 1,column + 1});
+        result.push_back({line + 1,column + 2});
     }
 
     if (m_curtype == block_type::O) {
-        m_map[blck_x][blck_y] = 1;
-        m_map[blck_x][blck_y + 1] = 1;
-        m_map[blck_x + 1][blck_y] = 1;
-        m_map[blck_x + 1][blck_y + 1] = 1;
+        result.push_back({line,column});
+        result.push_back({line,column + 1});
+        result.push_back({line + 1,column});
+        result.push_back({line + 1,column + 1});
     }
 
     if (m_curtype == block_type::S) {
-        m_map[blck_x][blck_y] = 1;
-        m_map[blck_x][blck_y + 1] = 1;
-        m_map[blck_x + 1][blck_y] = 1;
-        m_map[blck_x + 1][blck_y - 1] = 1;
+        result.push_back({line,column});
+        result.push_back({line,column + 1});
+        result.push_back({line + 1,column});
+        result.push_back({line + 1,column - 1});
     }
 
     if (m_curtype == block_type::T) {
-        m_map[blck_x][blck_y] = 1;
-        m_map[blck_x + 1][blck_y] = 1;
-        m_map[blck_x + 1][blck_y + 1] = 1;
-        m_map[blck_x + 1][blck_y - 1] = 1;
+        result.push_back({line,column});
+        result.push_back({line + 1,column});
+        result.push_back({line + 1,column + 1});
+        result.push_back({line + 1,column - 1});
     }
 
     if (m_curtype == block_type::Z) {
-        m_map[blck_x][blck_y] = 1;
-        m_map[blck_x][blck_y - 1] = 1;
-        m_map[blck_x + 1][blck_y] = 1;
-        m_map[blck_x + 1][blck_y + 1] = 1;
+        result.push_back({line,column});
+        result.push_back({line,column - 1});
+        result.push_back({line + 1,column});
+        result.push_back({line + 1,column + 1});
     }
+    return result;
 }
-
 
 bool TetraGameState::isBottom(){
     return  blck_x==map_height-1;
