@@ -43,6 +43,7 @@ int Application::OnExecute() {
 
 bool Application::OnInit() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+        std::cerr << "Init error" <<SDL_GetError()<<endl;
         return false;
     }
 
