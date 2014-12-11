@@ -38,5 +38,7 @@ ENDIF(GLU_INCLUDE_DIR)
 set(CMAKE_CXX_FLAGS "${SDL_CFLAGS} -std=c++0x ${CMAKE_CXX_FLAGS} -Wwrite-strings -g -ftest-coverage -fprofile-arcs -Wsign-compare")
 
 add_subdirectory(core)
-add_subdirectory(test)
 add_subdirectory(tdg)
+
+enable_testing()
+add_subdirectory(test)

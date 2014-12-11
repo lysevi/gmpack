@@ -31,3 +31,5 @@ nbproject
 *.exe
 *.out
 *.app
+CTestTestfile.cmake
+Testing
