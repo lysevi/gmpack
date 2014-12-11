@@ -25,7 +25,7 @@ namespace core {
     public:
         static void OnEvent(SDL_Event* Event);
         static void OnLoop();
-        static void OnRender(SDL_Surface* Surf_Display);
+        static void OnRender();
 
     public:
         static void SetActiveAppState(int AppStateID);

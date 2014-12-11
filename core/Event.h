@@ -1,6 +1,7 @@
 #pragma once
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
+
 namespace core{
 class Event {
 public:
@@ -14,9 +15,9 @@ public:
 
     virtual void OnInputBlur();
 
-    virtual void OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
+    virtual void OnKeyDown(SDL_Keycode sym, Uint16 mod);
 
-    virtual void OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode);
+    virtual void OnKeyUp(SDL_Keycode sym, Uint16 mod);
 
     virtual void OnMouseFocus();
 
@@ -48,7 +49,7 @@ public:
 
     virtual void OnJoyBall(Uint8 which, Uint8 ball, Sint16 xrel, Sint16 yrel);
 
-    virtual void OnMinimize();
+    //virtual void OnMinimize();
 
     virtual void OnRestore();
 

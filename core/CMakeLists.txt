@@ -1,5 +1,5 @@
-FILE(GLOB_RECURSE SRC "*.h" "*.cpp")
+FILE(GLOB SRC "*.h" "*.cpp")
 
-add_library(core SHARED ${SRC})
+add_library(core STATIC ${SRC})
 
 

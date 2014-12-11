@@ -22,6 +22,6 @@ void TDGame::OnDeactivate() {
 void TDGame::OnLoop() {
 }
 
-void TDGame::OnRender(SDL_Surface* Surf_Display) {
+void TDGame::OnRender() {
 }
 

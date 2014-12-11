@@ -9,9 +9,9 @@ namespace core {
         int FrameInc;
 
     private:
-        int FrameRate; //Milliseconds
+        Uint32 FrameRate; //Milliseconds
 
-        long OldTime;
+        Uint32 OldTime;
 
     public:
         int MaxFrames;

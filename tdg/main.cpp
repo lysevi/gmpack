@@ -11,7 +11,7 @@
 #include "TDGame.h"
 
 int main(int argc, char** argv) {
-    core::AppStateManager::AddState(core::APPSTATE_INTRO, new core::AppStateIntro("img/intro.bmp"));
+    //core::AppStateManager::AddState(core::APPSTATE_INTRO, new core::AppStateIntro("img/intro.bmp",2));
     core::AppStateManager::AddState(core::APPSTATE_GAME, new TDGame());
     core::Application app(640, 640);
     return app.OnExecute();

@@ -1,4 +1,4 @@
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <string>
 #include <stdexcept>
 #include <iostream>
@@ -14,15 +14,11 @@ Surface::Surface() {
 SDL_Surface* Surface::OnLoad(const std::string& File) {
     logger << "Loading " << File << std::endl;
 
-    SDL_Surface* Surf_Temp = NULL;
     SDL_Surface* Surf_Return = NULL;
 
-    if ((Surf_Temp = SDL_LoadBMP(File.c_str())) == NULL) {
+    if ((Surf_Return = SDL_LoadBMP(File.c_str())) == NULL) {
         throw Exception::CreateAndLog(POSITION, std::string("loadImage: ") + File);
     }
-
-    Surf_Return = SDL_DisplayFormat(Surf_Temp);
-    SDL_FreeSurface(Surf_Temp);
 
     return Surf_Return;
 }
@@ -65,7 +61,7 @@ bool Surface::Transparent(SDL_Surface* Surf_Dest, int R, int G, int B) {
     if (Surf_Dest == NULL)
         return false;
 
-    SDL_SetColorKey(Surf_Dest, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(Surf_Dest->format, R, G, B));
+    SDL_SetColorKey(Surf_Dest, SDL_TRUE | SDL_RLEACCEL, SDL_MapRGB(Surf_Dest->format, R, G, B));
 
     return true;
 }

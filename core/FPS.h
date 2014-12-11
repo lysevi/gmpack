@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 namespace core {
 
     class FPS {
@@ -15,7 +15,7 @@ namespace core {
         static FPS FPSControl;
 
     private:
-        int OldTime;
+        uint OldTime;
         int LastTime;
 
         float SpeedFactor;

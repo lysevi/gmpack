@@ -10,7 +10,7 @@ namespace core {
     private:
         bool Running;
 
-        SDL_Surface* Surf_Display;
+        SDL_Window *m_win;
         int m_width;
         int m_height;
     public:

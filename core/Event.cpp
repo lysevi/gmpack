@@ -1,3 +1,5 @@
+#include <SDL2/SDL_stdinc.h>
+
 #include "Event.h"
 
 using namespace core;
@@ -11,10 +13,10 @@ Event::~Event() {
 
 void Event::OnEvent(SDL_Event* Event) {
     switch (Event->type) {
-        case SDL_ACTIVEEVENT:
+       /* case SDL_WINDOWEVENT:
         {
-            switch (Event->active.state) {
-                case SDL_APPMOUSEFOCUS:
+            switch (event->window.event) {
+                case SDL_WINDOWEVENT_ENTER:
                 {
                     if (Event->active.gain) OnMouseFocus();
                     else OnMouseBlur();
@@ -37,17 +39,17 @@ void Event::OnEvent(SDL_Event* Event) {
                 }
             }
             break;
-        }
+        }*/
 
         case SDL_KEYDOWN:
         {
-            OnKeyDown(Event->key.keysym.sym, Event->key.keysym.mod, Event->key.keysym.unicode);
+            OnKeyDown(Event->key.keysym.sym, Event->key.keysym.mod);
             break;
         }
 
         case SDL_KEYUP:
         {
-            OnKeyUp(Event->key.keysym.sym, Event->key.keysym.mod, Event->key.keysym.unicode);
+            OnKeyUp(Event->key.keysym.sym, Event->key.keysym.mod);
             break;
         }
 
@@ -142,7 +144,7 @@ void Event::OnEvent(SDL_Event* Event) {
             break;
         }
 
-        case SDL_VIDEORESIZE:
+/*        case SDL_VIDEORESIZE:
         {
             OnResize(Event->resize.w, Event->resize.h);
             break;
@@ -152,7 +154,7 @@ void Event::OnEvent(SDL_Event* Event) {
         {
             OnExpose();
             break;
-        }
+        }*/
 
         default:
         {
@@ -170,11 +172,11 @@ void Event::OnInputBlur() {
     //Pure virtual, do nothing
 }
 
-void Event::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
+void Event::OnKeyDown(SDL_Keycode sym, Uint16 mod) {
     //Pure virtual, do nothing
 }
 
-void Event::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode) {
+void Event::OnKeyUp(SDL_Keycode sym, Uint16 mod) {
     //Pure virtual, do nothing
 }
 
@@ -238,9 +240,9 @@ void Event::OnJoyBall(Uint8 which, Uint8 ball, Sint16 xrel, Sint16 yrel) {
     //Pure virtual, do nothing
 }
 
-void Event::OnMinimize() {
-    //Pure virtual, do nothing
-}
+//void Event::OnMinimize() {
+//    //Pure virtual, do nothing
+//}
 
 void Event::OnRestore() {
     //Pure virtual, do nothing

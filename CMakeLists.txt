@@ -1,21 +1,42 @@
 cmake_minimum_required(VERSION 2.8)
 PROJECT(tdg)
 
-INCLUDE(FindSDL)
 
-IF(SDL_FOUND) 
-        INCLUDE_DIRECTORIES(SDL_INCLUDE_DIR) 
-ELSE(SDL_FOUND) 
-        MESSAGE("SDL not found") 
-ENDIF(SDL_FOUND) 
+set(SDL_CONFIG "sdl2-config" CACHE STRING "Path to sd2-config script")
+EXEC_PROGRAM(${SDL_CONFIG} ARGS "--cflags" OUTPUT_VARIABLE SDL_CFLAGS)
+ADD_DEFINITIONS(${SDL_CFLAGS})
+EXEC_PROGRAM(${SDL_CONFIG} ARGS "--libs" OUTPUT_VARIABLE SDL_LIBS)
 
-set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -Wwrite-strings -g -ftest-coverage -fprofile-arcs")
+
+SET(ALL_LIBRARIES ${ALL_LIBRARIES} ${SDL_LIBS})
+
+FIND_PACKAGE(OpenGL REQUIRED)
+IF(OPENGL_FOUND)
+	INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR})
+	SET(ALL_LIBRARIES ${ALL_LIBRARIES} ${OPENGL_gl_LIBRARY})
+ELSE(OPENGL_FOUND)
+	MESSAGE(FATAL_ERROR "OpenGL not found")
+ENDIF(OPENGL_FOUND)
+
+
+FIND_LIBRARY(GLU_LIBRARY GLU)
+
+FIND_PATH(GLU_INCLUDE_DIR GL/glu.h
+ 	HINTS
+	$ENV{GLUTDIR}
+	$ENV{GLU_PATH}
+ 	PATHS
+ 	PATH_SUFFIXES include/GL include)
+IF(GLU_INCLUDE_DIR)
+	MESSAGE(STATUS "Found GLU headers: ${GLU_INCLUDE_DIR}")
+	INCLUDE_DIRECTORIES(${GLU_INCLUDE_DIR})
+ELSE(GLU_INCLUDE_DIR)
+	MESSAGE(FATAL_ERROR "GLU headers not found")
+ENDIF(GLU_INCLUDE_DIR)
+
+
+set(CMAKE_CXX_FLAGS "${SDL_CFLAGS} -std=c++0x ${CMAKE_CXX_FLAGS} -Wwrite-strings -g -ftest-coverage -fprofile-arcs -Wsign-compare")
 
 add_subdirectory(core)
-add_subdirectory(tic_tac)
-add_subdirectory(tetra)
 add_subdirectory(test)
 add_subdirectory(tdg)
-#file(GLOB src_cpp "*.cpp" "core/*.cpp" "units/*.cpp")
-#add_executable(tdg ${src_cpp})
-#TARGET_LINK_LIBRARIES(tdg ${SDL_LIBRARY})
