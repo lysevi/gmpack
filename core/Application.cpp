@@ -107,11 +107,6 @@ void Application::OnMouseMove(int mX, int mY, int relX, int relY, bool Left, boo
             << std::endl;*/
 }
 
-void Application::OnLButtonDown(int mX, int mY) {
-}
-
-void Application::OnRButtonDown(int mX, int mY) {
-}
 
 void Application::OnCleanup() {
     AppStateManager::SetActiveAppState(APPSTATE_NONE);

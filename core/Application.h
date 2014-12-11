@@ -33,8 +33,7 @@ namespace core {
         void OnCleanup();
 
         void OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Right, bool Middle);
-        void OnLButtonDown(int mX, int mY);
-        void OnRButtonDown(int mX, int mY);
+
     private:
         SDL_Surface* loadImage(const std::string fName);
     };
