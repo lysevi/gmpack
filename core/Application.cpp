@@ -14,6 +14,7 @@
 #include "ProcessLogger.h"
 #include "Surface.h"
 #include "FPS.h"
+#include "BaseObject.h"
 
 using namespace core;
 
@@ -114,5 +115,6 @@ void Application::OnRButtonDown(int mX, int mY) {
 
 void Application::OnCleanup() {
     AppStateManager::SetActiveAppState(APPSTATE_NONE);
+    core::BaseObject::checkMemoryStatus();
     SDL_Quit();
 }
