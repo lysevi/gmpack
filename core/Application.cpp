@@ -47,20 +47,20 @@ int Application::OnExecute() {
 
 bool Application::OnInit() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0) {
-        std::cerr << "Init error" <<SDL_GetError()<<std::endl;
+        std::cerr << "Init error" << SDL_GetError() << std::endl;
         return false;
     }
-    
+
     m_win = SDL_CreateWindow("tdg", 100, 100, 640, 480, SDL_WINDOW_OPENGL);
-    if (m_win == nullptr){
-	std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-    	SDL_Quit();
-	return false;
+    if (m_win == nullptr) {
+        std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+        SDL_Quit();
+        return false;
     }
     SDL_GL_CreateContext(m_win);
     SDL_GL_SetSwapInterval(1);
     SDL_DisableScreenSaver();
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     /*m_ren = SDL_CreateRenderer(m_win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (m_ren == nullptr){
         std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
@@ -82,7 +82,7 @@ void Application::OnEvent(SDL_Event* Event) {
 }
 
 void Application::OnExit() {
-    logger<<"exit()"<<std::endl;
+    logger << "exit()" << std::endl;
     Running = false;
 }
 
