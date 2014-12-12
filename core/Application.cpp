@@ -74,10 +74,11 @@ bool Application::OnInit() {
     glClearDepth(1.0);
     glDepthFunc(GL_LESS);
     glEnable(GL_DEPTH_TEST); // включаем тест глубины
-    glShadeModel(GL_SMOOTH);
+    glShadeModel(GL_FLAT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0f, (float) m_width / (float) m_height, 0.1f, 100.0f); // настраиваем трехмерную перспективу
+    glViewport(0,0,m_width,m_height);
+    glOrtho(0,640,0,480,-100,100);
     glMatrixMode(GL_MODELVIEW); // переходим в трехмерный режим
 
     std::cerr << "Init video mode done." << std::endl;

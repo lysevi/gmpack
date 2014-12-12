@@ -11,6 +11,8 @@
 #include <GL/glu.h> // Библиотека GLU
 
 TDGame::TDGame() {
+    for (int i = 0; i < map_height - 1; ++i)
+        m_gamemap[i][1] = core::CellType::ROCK;
 }
 
 TDGame::~TDGame() {
@@ -25,60 +27,59 @@ void TDGame::OnDeactivate() {
 void TDGame::OnLoop() {
 }
 
-void drawCube(float xrf, float yrf, float zrf){
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-     
-    glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -7.0f);    // Сдвинуть вглубь экрана
-     
-    glRotatef(xrf, 1.0f, 0.0f, 0.0f);   // Вращение куба по X, Y, Z
-    glRotatef(yrf, 0.0f, 1.0f, 0.0f);   // Вращение куба по X, Y, Z
-    glRotatef(zrf, 0.0f, 0.0f, 1.0f);   // Вращение куба по X, Y, Z
-     
-    glBegin(GL_QUADS);                  // Рисуем куб
- 
-    glColor3f(0.0f, 1.0f, 0.0f);        // Синяя сторона (Верхняя)
-    glVertex3f( 1.0f, 1.0f, -1.0f);     // Верхний правый угол квадрата
-    glVertex3f(-1.0f, 1.0f, -1.0f);     // Верхний левый
-    glVertex3f(-1.0f, 1.0f,  1.0f);     // Нижний левый
-    glVertex3f( 1.0f, 1.0f,  1.0f);     // Нижний правый
-     
-    glColor3f(1.0f, 0.5f, 0.0f);        // Оранжевая сторона (Нижняя)
-    glVertex3f( 1.0f, -1.0f,  1.0f);    // Верхний правый угол квадрата
-    glVertex3f(-1.0f, -1.0f,  1.0f);    // Верхний левый
-    glVertex3f(-1.0f, -1.0f, -1.0f);    // Нижний левый
-    glVertex3f( 1.0f, -1.0f, -1.0f);    // Нижний правый
-     
-    glColor3f(1.0f, 0.0f, 0.0f);        // Красная сторона (Передняя)
-    glVertex3f( 1.0f,  1.0f, 1.0f);     // Верхний правый угол квадрата
-    glVertex3f(-1.0f,  1.0f, 1.0f);     // Верхний левый
-    glVertex3f(-1.0f, -1.0f, 1.0f);     // Нижний левый
-    glVertex3f( 1.0f, -1.0f, 1.0f);     // Нижний правый
- 
-    glColor3f(1.0f,1.0f,0.0f);          // Желтая сторона (Задняя)
-    glVertex3f( 1.0f, -1.0f, -1.0f);    // Верхний правый угол квадрата
-    glVertex3f(-1.0f, -1.0f, -1.0f);    // Верхний левый
-    glVertex3f(-1.0f,  1.0f, -1.0f);    // Нижний левый
-    glVertex3f( 1.0f,  1.0f, -1.0f);    // Нижний правый
- 
-    glColor3f(0.0f,0.0f,1.0f);          // Синяя сторона (Левая)
-    glVertex3f(-1.0f,  1.0f,  1.0f);    // Верхний правый угол квадрата
-    glVertex3f(-1.0f,  1.0f, -1.0f);    // Верхний левый
-    glVertex3f(-1.0f, -1.0f, -1.0f);    // Нижний левый
-    glVertex3f(-1.0f, -1.0f,  1.0f);    // Нижний правый
-     
-    glColor3f(1.0f,0.0f,1.0f);          // Фиолетовая сторона (Правая)
-    glVertex3f( 1.0f,  1.0f, -1.0f);    // Верхний правый угол квадрата
-    glVertex3f( 1.0f,  1.0f,  1.0f);    // Верхний левый
-    glVertex3f( 1.0f, -1.0f,  1.0f);    // Нижний левый
-    glVertex3f( 1.0f, -1.0f, -1.0f);    // Нижний правый
- 
-    glEnd();                            // Закончили квадраты    
- 
-}
-
 void TDGame::OnRender() {
-    logger<<"draw cube\n";
-    drawCube(10,10,10);
+    drawMap();
 }
 
+void TDGame::drawMap() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+
+    //glTranslatef(0.0f, 0.0f, -7.0f); // Сдвинуть вглубь экрана
+
+    glBegin(GL_LINES);
+    glColor3ub(47, 54, 152);
+    for (int i = 0; i < map_height; ++i) {
+        auto cell_height = (480 / map_height);
+        auto y = i*cell_height;
+
+        glVertex3f(0, y, 0);
+        glVertex3f(640, y, 0);
+        for (int j = 0; j < map_width; ++j) {
+            auto cell_width = (640 / map_width);
+
+            auto x = j*cell_width;
+
+
+            glVertex3f(x, y, 0);
+            glVertex3f(x, 480, 0);
+        }
+    }
+    glEnd();
+
+    for (int i = 0; i < map_height; ++i) {
+        auto cell_height = (480 / map_height);
+        auto y = i*cell_height;
+
+        for (int j = 0; j < map_width; ++j) {
+            auto cell_width = (640 / map_width);
+
+            auto x = j*cell_width;
+            if (m_gamemap[i][j] == core::CellType::ROCK) {
+                glBegin(GL_QUADS);
+                glVertex3d(x, y, 0);
+                glVertex3d(x + cell_width, y, 0);
+
+                glVertex3d(x + cell_width, y + cell_height, 0);
+                glVertex3d(x, y + cell_height, 0);
+
+                glVertex3d(x, y + cell_height, 0);
+                glVertex3d(x, y, 0);
+
+                glVertex3d(x + cell_width, y, 0);
+                glVertex3d(x + cell_width, y + cell_height, 0);
+                glEnd();
+            }
+        }
+    }
+}
