@@ -127,6 +127,7 @@ void Application::OnMouseMove(int mX, int mY, int relX, int relY, bool Left, boo
 
 void Application::OnCleanup() {
     AppStateManager::SetActiveAppState(APPSTATE_NONE);
+    SDL_DestroyWindow(m_win);
     core::BaseObject::checkMemoryStatus();
     SDL_Quit();
 }
