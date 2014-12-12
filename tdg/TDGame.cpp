@@ -10,7 +10,9 @@
 #include <GL/gl.h> // Библиотека OpenGL
 #include <GL/glu.h> // Библиотека GLU
 
-TDGame::TDGame() {
+TDGame::TDGame(int width, int height) {
+    m_width=width;
+    m_height=height;
     for (int i = 0; i < map_height - 1; ++i)
         m_gamemap[i][1] = core::CellType::ROCK;
 }
@@ -40,29 +42,29 @@ void TDGame::drawMap() {
     glBegin(GL_LINES);
     glColor3ub(47, 54, 152);
     for (int i = 0; i < map_height; ++i) {
-        auto cell_height = (480 / map_height);
+        auto cell_height = (m_height / map_height);
         auto y = i*cell_height;
 
         glVertex3f(0, y, 0);
         glVertex3f(640, y, 0);
         for (int j = 0; j < map_width; ++j) {
-            auto cell_width = (640 / map_width);
+            auto cell_width = (m_width / map_width);
 
             auto x = j*cell_width;
 
 
             glVertex3f(x, y, 0);
-            glVertex3f(x, 480, 0);
+            glVertex3f(x, m_width, 0);
         }
     }
     glEnd();
-
+    
     for (int i = 0; i < map_height; ++i) {
-        auto cell_height = (480 / map_height);
+        auto cell_height = (m_height / map_height);
         auto y = i*cell_height;
 
         for (int j = 0; j < map_width; ++j) {
-            auto cell_width = (640 / map_width);
+            auto cell_width = (m_width / map_width);
 
             auto x = j*cell_width;
             if (m_gamemap[i][j] == core::CellType::ROCK) {

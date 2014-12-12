@@ -13,8 +13,10 @@ const int map_height=20;
 
 class TDGame: public core::AppState  {
     core::map_cell m_gamemap[map_height][map_width];
+    int m_width;
+    int m_height;
 public:
-    TDGame();
+    TDGame(int width, int height);
     virtual ~TDGame();
 
     void OnActivate();
