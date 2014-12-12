@@ -11,6 +11,7 @@ namespace core {
         bool Running;
 
         SDL_Window *m_win;
+        SDL_GLContext m_context;
         int m_width;
         int m_height;
     public:

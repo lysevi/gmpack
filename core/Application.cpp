@@ -20,8 +20,6 @@
 
 using namespace core;
 
-const int width = 640; // ширина окна
-const int height = 480; // высота окна
 
 Application::Application(int width, int height) {
     Running = true;
@@ -56,13 +54,13 @@ bool Application::OnInit() {
         return false;
     }
 
-    m_win = SDL_CreateWindow("tdg", 100, 100, width, height, SDL_WINDOW_OPENGL);
+    m_win = SDL_CreateWindow("tdg", 100, 100, m_width, m_height, SDL_WINDOW_OPENGL);
     if (m_win == nullptr) {
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return false;
     }
-    SDL_GL_CreateContext(m_win);
+    m_context=SDL_GL_CreateContext(m_win);
     SDL_GL_SetSwapInterval(1);
     SDL_DisableScreenSaver();
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -79,7 +77,7 @@ bool Application::OnInit() {
     glShadeModel(GL_SMOOTH);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0f, (float) width / (float) height, 0.1f, 100.0f); // настраиваем трехмерную перспективу
+    gluPerspective(45.0f, (float) m_width / (float) m_height, 0.1f, 100.0f); // настраиваем трехмерную перспективу
     glMatrixMode(GL_MODELVIEW); // переходим в трехмерный режим
 
     std::cerr << "Init video mode done." << std::endl;
@@ -127,6 +125,7 @@ void Application::OnMouseMove(int mX, int mY, int relX, int relY, bool Left, boo
 
 void Application::OnCleanup() {
     AppStateManager::SetActiveAppState(APPSTATE_NONE);
+    SDL_GL_DeleteContext(m_context);
     SDL_DestroyWindow(m_win);
     core::BaseObject::checkMemoryStatus();
     SDL_Quit();
