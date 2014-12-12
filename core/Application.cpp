@@ -6,6 +6,8 @@
 #include <stdexcept>
 
 #include <SDL2/SDL.h>
+#include <GL/gl.h> // Библиотека OpenGL
+#include <GL/glu.h> // Библиотека GLU
 
 #include "Event.h"
 #include "Animation.h"
@@ -17,6 +19,9 @@
 #include "BaseObject.h"
 
 using namespace core;
+
+const int width = 640; // ширина окна
+const int height = 480; // высота окна
 
 Application::Application(int width, int height) {
     Running = true;
@@ -51,7 +56,7 @@ bool Application::OnInit() {
         return false;
     }
 
-    m_win = SDL_CreateWindow("tdg", 100, 100, 640, 480, SDL_WINDOW_OPENGL);
+    m_win = SDL_CreateWindow("tdg", 100, 100, width, height, SDL_WINDOW_OPENGL);
     if (m_win == nullptr) {
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -67,7 +72,18 @@ bool Application::OnInit() {
         return 1;
     }*/
 
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // устанавливаем фоновый цвет на черный
+    glClearDepth(1.0);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_DEPTH_TEST); // включаем тест глубины
+    glShadeModel(GL_SMOOTH);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0f, (float) width / (float) height, 0.1f, 100.0f); // настраиваем трехмерную перспективу
+    glMatrixMode(GL_MODELVIEW); // переходим в трехмерный режим
+
     std::cerr << "Init video mode done." << std::endl;
+
 
     AppStateManager::SetActiveAppState(APPSTATE_GAME);
 
@@ -97,6 +113,7 @@ void Application::OnLoop() {
 
 void Application::OnRender() {
     AppStateManager::OnRender();
+    SDL_GL_SwapWindow(m_win);
     //SDL_Flip(Surf_Display);
 }
 
