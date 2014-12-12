@@ -10,13 +10,13 @@
 #include <GL/glu.h> // Библиотека GLU
 
 #include "Event.h"
-#include "Animation.h"
+#include "../UI/Animation.h"
 #include "Application.h"
 #include "AppStateManager.h"
-#include "ProcessLogger.h"
-#include "Surface.h"
-#include "FPS.h"
-#include "BaseObject.h"
+#include "../Utils/ProcessLogger.h"
+#include "../UI/Surface.h"
+#include "../UI/FPS.h"
+#include "../Utils/BaseObject.h"
 
 using namespace core;
 

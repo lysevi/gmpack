@@ -4,9 +4,9 @@
  *
  * Created on 10 декабря 2014 г., 21:36
  */
-#include "Application.h"
-#include "AppStateManager.h"
-#include "AppStateIntro.h"
+#include "App/Application.h"
+#include "App/AppStateManager.h"
+#include "App/AppStateIntro.h"
 
 #include "TDGame.h"
 

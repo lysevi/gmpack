@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include <AppState.h>
-#include <GameMap.h>
+#include <App/AppState.h>
+#include <Utils/GameMap.h>
 const int map_width=20;
 const int map_height=20;
 

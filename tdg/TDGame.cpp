@@ -6,7 +6,7 @@
  */
 
 #include "TDGame.h"
-#include <ProcessLogger.h>
+#include <Utils/ProcessLogger.h>
 #include <GL/gl.h> // Библиотека OpenGL
 #include <GL/glu.h> // Библиотека GLU
 

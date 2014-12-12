@@ -6,8 +6,9 @@
  */
 
 #include "AppStateManager.h"
-#include "ProcessLogger.h"
-#include "Exception.h"
+#include "../Utils/ProcessLogger.h"
+#include "../Utils/Exception.h"
+
 using namespace core;
 AppState* AppStateManager::ActiveAppState = 0;
 std::map<int, AppState*> AppStateManager::m_states;

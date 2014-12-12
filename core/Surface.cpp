@@ -2,9 +2,9 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
-#include "Surface.h"
-#include "ProcessLogger.h"
-#include "Exception.h"
+#include "UI/Surface.h"
+#include "Utils/ProcessLogger.h"
+#include "Utils/Exception.h"
 
 using namespace core;
 
