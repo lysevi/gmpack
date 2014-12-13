@@ -64,12 +64,7 @@ bool Application::OnInit() {
     SDL_GL_SetSwapInterval(1);
     SDL_DisableScreenSaver();
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    /*m_ren = SDL_CreateRenderer(m_win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (m_ren == nullptr){
-        std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        return 1;
-    }*/
-
+   
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // устанавливаем фоновый цвет на черный
     glClearDepth(1.0);
     glDepthFunc(GL_LESS);
@@ -78,7 +73,7 @@ bool Application::OnInit() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0,0,m_width,m_height);
-    glOrtho(0,640,0,480,-100,100);
+    glOrtho(-10,m_width-10,-10,m_height-10,-100,100);
     glMatrixMode(GL_MODELVIEW); // переходим в трехмерный режим
 
     std::cerr << "Init video mode done." << std::endl;

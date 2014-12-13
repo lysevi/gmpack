@@ -12,8 +12,8 @@
 
 int main(int argc, char** argv) {
     //core::AppStateManager::AddState(core::APPSTATE_INTRO, new core::AppStateIntro("img/intro.bmp",2));
-    core::AppStateManager::AddState(core::APPSTATE_GAME, new TDGame(640,480));
-    core::Application app(640, 640);
+    core::AppStateManager::AddState(core::APPSTATE_GAME, new TDGame(800,600,640,480));
+    core::Application app(800, 600);
     return app.OnExecute();
 }
 
