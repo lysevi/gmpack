@@ -41,6 +41,10 @@ void TDGame::OnRender() {
     for (auto punit:m_units) {
         punit->draw();
     }
+
+    for (auto pt:m_towers) {
+        pt->draw();
+    }
 }
 
 
@@ -49,4 +53,8 @@ void TDGame::generateUnits() {
     auto sunit = std::make_shared<core::SimpleUnit>();
     sunit->point={0,0};
     m_units.push_back(sunit);
+
+    auto stower=std::make_shared<core::BaseTower>();
+    stower->point={3,3};
+    m_towers.push_back(stower);
 }

@@ -10,6 +10,7 @@
 #include <Utils/GameMap.h>
 #include <Utils/PathFinder.h>
 #include <UI/Units/SimpleUnit.h>
+#include <UI/Towers/BaseTower.h>
 #include <list>
 #include <memory>
 const int map_width=20;
@@ -20,7 +21,8 @@ class TDGame: public core::AppState  {
     int m_height;
     int m_map_ui_width;  // ширина и высота карты на окне
     int m_map_ui_height;
-    std::list<std::shared_ptr<core::BaseUnit>> m_units;
+    std::list<std::shared_ptr<core::BaseUnit>>  m_units;
+    std::list<std::shared_ptr<core::BaseTower>> m_towers;
 
     int m_cell_height;
     int m_cell_width;
