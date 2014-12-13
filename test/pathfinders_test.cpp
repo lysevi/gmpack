@@ -37,8 +37,8 @@ int main() {
     init_map();
 
     show_map();
-    auto from = core::PathFinder::Point{0, 0};
-    auto goal = core::PathFinder::Point{map_height - 1, map_width - 1};
+    auto from = core::Point{0, 0};
+    auto goal = core::Point{map_height - 1, map_width - 1};
     auto path = core::PathFinder::astar_flow(map, map_height, map_width, from, goal);
 
     for (auto it = path.begin(); it != path.end(); ++it) {
