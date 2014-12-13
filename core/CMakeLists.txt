@@ -1,4 +1,6 @@
-FILE(GLOB_RECURSE SRC "*.h" "*.cpp")
+FILE(GLOB SRC "App/*.cpp"
+              "UI/*.cpp"
+              "Utils/*.cpp")
 
 add_library(core STATIC ${SRC})
 
