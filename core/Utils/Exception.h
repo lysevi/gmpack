@@ -9,6 +9,9 @@
 #include <string>
 #include "ProcessLogger.h"
 #include <stdexcept>
+
+#define POSITION (core::CodePosition(__FILE__, __LINE__, __FUNCTION__))
+
 namespace core {
 
     struct CodePosition {
@@ -22,8 +25,6 @@ namespace core {
 
         std::string toString()const;
     };
-
-#define POSITION (CodePosition(__FILE__, __LINE__, __FUNCTION__))
 
     class Exception : public std::exception {
     public:

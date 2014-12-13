@@ -16,7 +16,7 @@
 #include "../Utils/ProcessLogger.h"
 #include "../UI/Surface.h"
 #include "../UI/FPS.h"
-#include "../Utils/BaseObject.h"
+#include "../Utils/MemCheckObject.h"
 
 using namespace core;
 
@@ -123,6 +123,6 @@ void Application::OnCleanup() {
     AppStateManager::SetActiveAppState(APPSTATE_NONE);
     SDL_GL_DeleteContext(m_context);
     SDL_DestroyWindow(m_win);
-    core::BaseObject::checkMemoryStatus();
+    core::MemCheckObject::checkMemoryStatus();
     SDL_Quit();
 }

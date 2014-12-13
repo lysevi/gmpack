@@ -5,27 +5,27 @@
  * Created on 11 декабря 2014 г., 22:28
  */
 
-#include "BaseObject.h"
+#include "MemCheckObject.h"
 using namespace core;
 
-long long BaseObject::memory_op = 0L;
-std::mutex BaseObject::memory_mutex{};
+long long MemCheckObject::memory_op = 0L;
+std::mutex MemCheckObject::memory_mutex{};
 
-BaseObject::BaseObject() {
+MemCheckObject::MemCheckObject() {
 };
 
-void* BaseObject::operator new(std::size_t sz) {
+void* MemCheckObject::operator new(std::size_t sz) {
     std::lock_guard<std::mutex> lock(memory_mutex);
     ++memory_op;
     return ::operator new(sz);
 }
-void* BaseObject::operator new[](std::size_t sz) {
+void* MemCheckObject::operator new[](std::size_t sz) {
     std::lock_guard<std::mutex> lock(memory_mutex);
     --memory_op;
     return ::operator new(sz);
 }
 
-void BaseObject::checkMemoryStatus() {
+void MemCheckObject::checkMemoryStatus() {
     if (memory_op % 2 != 0)
         throw Exception::CreateAndLog(POSITION, "bad memory");
     logger << "memory ok." << std::endl;

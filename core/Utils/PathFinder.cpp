@@ -14,8 +14,8 @@
 
 using namespace core;
 
-PathFinder::PointList PathFinder::getNeighbors(PathFinder::Point from, map_cell** map, int map_height, int map_width) {
-    PathFinder::PointList result;
+PointList PathFinder::getNeighbors(Point from, map_cell** map, int map_height, int map_width) {
+    PointList result;
     if ((from.column - 1) >= 0) {
         result.push_back({from.line, from.column - 1});
     }
@@ -39,20 +39,20 @@ PathFinder::PointList PathFinder::getNeighbors(PathFinder::Point from, map_cell*
     return result;
 }
 
-float PathFinder::heuristic_cost_estimate(PathFinder::Point start, PathFinder::Point goal) {
+float PathFinder::heuristic_cost_estimate(Point start, Point goal) {
     auto res = sqrt((float) (pow((goal.line - start.line), 2.0) + pow((goal.column - start.column), 2.0)));
 
     return res;
 }
 
-PathFinder::PointList PathFinder::astar_flow(map_cell**map, int map_height, int map_width, Point start, Point goal) {
-    PathFinder::PointList result;
+PointList PathFinder::astar_flow(map_cell**map, const int map_height, const int map_width, Point start, Point goal) {
+    PointList result;
 
-    std::set<PathFinder::Point> closedset;
-    std::set<PathFinder::Point> openset;
-    std::map<PathFinder::Point, Point> came_from;
-    std::map<PathFinder::Point, float> g_score;
-    std::map<PathFinder::Point, float> f_score;
+    std::set<Point> closedset;
+    std::set<Point> openset;
+    std::map<Point, Point> came_from;
+    std::map<Point, float> g_score;
+    std::map<Point, float> f_score;
 
     openset.insert(start);
     g_score[start] = 0;
@@ -100,7 +100,6 @@ PathFinder::PointList PathFinder::astar_flow(map_cell**map, int map_height, int 
                 came_from[neighbor] = current;
                 g_score[neighbor] = tentative_g_score;
                 f_score[neighbor] = g_score[neighbor] + heuristic_cost_estimate(neighbor, goal);
-
                 openset.insert(neighbor);
             }
         }

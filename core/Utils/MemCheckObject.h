@@ -12,12 +12,12 @@
 #include "Exception.h"
 namespace core {
 
-    class BaseObject {
+    class MemCheckObject {
         static std::mutex memory_mutex;
         static long long memory_op;
     public:
 
-        BaseObject();
+        MemCheckObject();
         static void* operator new(std::size_t sz);
         static void* operator new[](std::size_t sz);
         static void checkMemoryStatus();
