@@ -11,7 +11,11 @@ namespace core {
         void draw()const;
         int getRadius()const;
         void setRadius(int newRadius);
+    public:
+        float angle;
+        int   id_of_target; //id юнита, в который стреляем. -1 если такого нет.
     private:
         int m_radius;
+
     };
 }

@@ -6,6 +6,7 @@
  */
 
 #include "Coord.h"
+#include <cmath>
 
 namespace core {
 
@@ -19,5 +20,7 @@ namespace core {
         y = 0;
     }
 
-    
+    float Coord::distance(const Coord&left,const Coord&right){
+        return sqrt(pow(left.x-right.x,2)+pow(left.y-right.y,2));
+    }
 }

@@ -13,11 +13,13 @@ namespace core {
     struct Coord {
         Coord(int x, int y);
         Coord();
-       
+        static float distance(const Coord&left,const Coord&right);
 
         int x;
         int y;
     };
+
+
 }
 #endif	/* COORD_H */
 

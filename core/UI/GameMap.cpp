@@ -86,20 +86,20 @@ void GameMap::draw()const{
             auto x = j*cell_width;
             if (m_gamemap[i][j] == core::CellType::ROCK) {
                 glColor3ub(47, 54, 152);
-                drawQUAD(x, y, cell_width, cell_height);
+                drawQUAD(x, y,0, cell_width, cell_height);
             }
 
             if ((startPoint.line == i && startPoint.column == j) ||
                     (endPoint.line == i && endPoint.column == j)) {
 
                 glColor3ub(147, 154, 152);
-                drawQUAD(x, y, cell_width, cell_height);
+                drawQUAD(x, y,0, cell_width, cell_height);
             }
 
             if (std::find_if(map_way.cbegin(), map_way.cend(),
                     [i,j](const Point&p){return p.line==i && p.column==j;})!= map_way.cend()) {
                 glColor3ub(147, 154, 152);
-                drawQUAD(x, y, cell_width, cell_height);
+                drawQUAD(x, y,0, cell_width, cell_height);
             }
         }
     }

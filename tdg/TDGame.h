@@ -16,6 +16,7 @@
 const int map_width=20;
 const int map_height=20;
 const int unit_move_time=500;
+
 class TDGame: public core::AppState  {
     typedef std::list<std::shared_ptr<core::BaseTower>> TowerList;
     typedef std::list<std::shared_ptr<core::BaseUnit>> UnitList;
@@ -28,7 +29,7 @@ class TDGame: public core::AppState  {
 
     int m_cell_height;
     int m_cell_width;
-    Uint32 curTime;
+    Uint32 m_curMoveTime;
 public:
     TDGame(int width, int height, int map_ui_width, int map_ui_height);
     virtual ~TDGame();
@@ -40,6 +41,10 @@ public:
     void OnLButtonDown(int mX, int mY);
     void OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Right, bool Middle);
 private:
+    void moveUnits();
     void generateUnits();
+    void calcNewTargets();
+    void calcTowersAngles();
+    std::shared_ptr<core::BaseUnit> getUnitById(const UnitList&ul, int id);
 };
 

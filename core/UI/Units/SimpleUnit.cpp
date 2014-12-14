@@ -5,6 +5,8 @@
 using namespace core;
 
 SimpleUnit::SimpleUnit() {
+    size.height=core::GameMap::instance.cell_height;
+    size.width=core::GameMap::instance.cell_width;
 }
 
 SimpleUnit::SimpleUnit(const SimpleUnit& orig) {

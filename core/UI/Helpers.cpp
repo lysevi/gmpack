@@ -15,19 +15,19 @@ namespace core {
         glEnd();
     }
 
-    void drawQUAD(const int x, const int y, const int width, const int height) {
+    void drawQUAD(const int x, const int y,const int z, const int width, const int height) {
         glBegin(GL_QUADS);
-        glVertex3d(x, y, 0);
-        glVertex3d(x + width, y, 0);
+        glVertex3d(x, y, z);
+        glVertex3d(x + width, y, z);
 
-        glVertex3d(x + width, y + height, 0);
-        glVertex3d(x, y + height, 0);
+        glVertex3d(x + width, y + height, z);
+        glVertex3d(x, y + height, z);
 
-        glVertex3d(x, y + height, 0);
-        glVertex3d(x, y, 0);
+        glVertex3d(x, y + height, z);
+        glVertex3d(x, y, z);
 
-        glVertex3d(x + width, y, 0);
-        glVertex3d(x + width, y + height, 0);
+        glVertex3d(x + width, y, z);
+        glVertex3d(x + width, y + height, z);
         glEnd();
     }
 }

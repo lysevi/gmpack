@@ -26,7 +26,7 @@ namespace core
         virtual void draw()const=0;
         virtual void OnClick();
     public:
-        uint  id;
+        int  id;
         bool isSelected;
         Point point;
         mutable Coord coord;
