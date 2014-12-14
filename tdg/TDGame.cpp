@@ -206,19 +206,15 @@ void TDGame::calcTowersAngles(){
 
         auto pu=getUnitById(m_units,pt->id_of_target);
 
-        float TU_x=pu->coord.x-pt->coord.x;
-        float TU_y=pu->coord.y-pt->coord.y;
+        auto tw=pt->getVector();
+        tw.Normalise();
+        auto un=pu->getVector();
+        un.Normalise();
+
         
-
-        float ZT_x=pu->coord.x;
-        float ZT_y=pt->coord.y;
-
-        core::Vector3d a(TU_x, TU_y,0.0f);a.Normalise();
-        core::Vector3d b(ZT_x, ZT_y,0);a.Normalise();
-
-        auto res=(a*b)/(a.Length()*b.Length());
+        auto res=acos(tw*un);
         
-        pt->angle=-res*(180/(3.14));
+        pt->angle=res;
         
         if(pt->id==1)
             logger<<"id="<<pt->id<<pt->angle<<"\n";

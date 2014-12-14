@@ -24,3 +24,7 @@ Object3d::~Object3d() {
 
 void Object3d::OnClick(){
 }
+
+Vector3d Object3d::getVector()const{
+    return Vector3d(coord.x+size.width/2,coord.y+size.height/2,ZCoord);
+}

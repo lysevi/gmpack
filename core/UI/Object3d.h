@@ -11,6 +11,7 @@
 #include "../Utils/Coord.h"
 #include "../Utils/Size.h"
 #include "../Utils/PathFinder.h"
+#include "../Math/Vector3d.h"
 
 namespace core 
 {
@@ -25,6 +26,7 @@ namespace core
 
         virtual void draw()const=0;
         virtual void OnClick();
+        Vector3d getVector()const;
     public:
         int  id;
         bool isSelected;
