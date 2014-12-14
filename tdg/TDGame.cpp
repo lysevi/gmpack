@@ -37,6 +37,8 @@ void TDGame::OnLoop() {
 }
 
 void TDGame::OnRender() {
+    glInitNames();
+    glPushName(0);
     core::GameMap::instance.draw();
     for (auto punit:m_units) {
         punit->draw();
@@ -47,7 +49,39 @@ void TDGame::OnRender() {
     }
 }
 
+void TDGame::OnLButtonDown(int mX, int mY){
+  GLint    viewport[4];    // параметры viewport-a.
+  GLdouble projection[16]; // матрица проекции.
+  GLdouble modelview[16];  // видовая матрица.
+  GLdouble vx,vy,vz;       // координаты курсора мыши в системе координат viewport-a.
+  GLdouble wx,wy,wz;       // возвращаемые мировые координаты.
 
+  glGetIntegerv(GL_VIEWPORT,viewport);           // узнаём параметры viewport-a.
+  glGetDoublev(GL_PROJECTION_MATRIX,projection); // узнаём матрицу проекции.
+  glGetDoublev(GL_MODELVIEW_MATRIX,modelview);   // узнаём видовую матрицу.
+  // переводим оконные координаты курсора в систему координат viewport-a.
+  vx = mX;
+  vy =m_height- mY; // где height - текущая высота окна.
+
+  // вычисляем ближний конец селектирующего отрезка.
+  vz = -1;
+  gluUnProject(vx, vy, vz, modelview, projection, viewport, &wx, &wy, &wz);
+  logger<<"x1="<<wx<<" y1="<<wy<<" z1"<<wz<<std::endl;
+
+
+  for(auto&ptower:m_towers){
+        if((ptower->coord.x<wx) && (ptower->coord.y<wy)
+          && (ptower->coord.y+ptower->size.height>wy)
+          && (ptower->coord.x+ptower->size.width>wy)){
+            ptower->isSelected=!ptower->isSelected;
+        }
+    }
+    OnRender();
+}
+
+void TDGame::OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Right, bool Middle){
+   
+}
 
 void TDGame::generateUnits() {
     auto sunit = std::make_shared<core::SimpleUnit>();
@@ -55,6 +89,9 @@ void TDGame::generateUnits() {
     m_units.push_back(sunit);
 
     auto stower=std::make_shared<core::BaseTower>();
-    stower->point={3,3};
+    stower->point.column=2;
+    stower->point.line=1;
+
+    stower->isSelected=true;
     m_towers.push_back(stower);
 }

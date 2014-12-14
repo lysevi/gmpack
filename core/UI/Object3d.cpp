@@ -8,12 +8,19 @@
 #include "Object3d.h"
 
 using namespace core;
+uint Object3d::nextID=0;
 
 Object3d::Object3d() {
+    isSelected=false;
+    id+=nextID;
+    nextID+=1;
 }
 
 Object3d::Object3d(const Object3d& orig) {
 }
 
 Object3d::~Object3d() {
+}
+
+void Object3d::OnClick(){
 }

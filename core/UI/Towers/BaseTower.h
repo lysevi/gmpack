@@ -9,7 +9,9 @@ namespace core {
         BaseTower(const BaseTower& orig);
         virtual ~BaseTower();
         void draw()const;
+        int getRadius()const;
+        void setRadius(int newRadius);
     private:
-
+        int m_radius;
     };
 }

@@ -7,7 +7,7 @@
 
 #pragma once
 #include <App/AppState.h>
-#include <Utils/GameMap.h>
+#include <UI/GameMap.h>
 #include <Utils/PathFinder.h>
 #include <UI/Units/SimpleUnit.h>
 #include <UI/Towers/BaseTower.h>
@@ -34,6 +34,8 @@ public:
     void OnDeactivate();
     void OnLoop();
     void OnRender();
+    void OnLButtonDown(int mX, int mY);
+    void OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Right, bool Middle);
 private:
     void generateUnits();
 };

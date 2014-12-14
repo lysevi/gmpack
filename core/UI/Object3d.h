@@ -16,6 +16,7 @@ namespace core
 {
     const int ZCoord=5;
     class Object3d:public MemCheckObject {
+        static uint nextID;
     protected:
     public:
         Object3d();
@@ -23,7 +24,10 @@ namespace core
         virtual ~Object3d();
 
         virtual void draw()const=0;
+        virtual void OnClick();
     public:
+        uint  id;
+        bool isSelected;
         Point point;
         mutable Coord coord;
         Size  size;

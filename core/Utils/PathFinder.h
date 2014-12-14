@@ -8,7 +8,7 @@
 #pragma once
 
 #include <list>
-#include "GameMap.h"
+#include "../UI/GameMap.h"
 
 namespace core {
 

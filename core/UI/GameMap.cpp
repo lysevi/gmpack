@@ -1,9 +1,11 @@
 #include "GameMap.h"
-#include "PathFinder.h"
-#include "Exception.h"
-#include "Coord.h"
+#include "../Utils/PathFinder.h"
+#include "../Utils/Exception.h"
+#include "../Utils/Coord.h"
+#include "Helpers.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <algorithm>
 
 using namespace core;
 
@@ -45,7 +47,7 @@ void GameMap::generateMap(){
     }
 }
 
-void GameMap::draw(){
+void GameMap::draw()const{
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
@@ -94,28 +96,13 @@ void GameMap::draw(){
                 drawQUAD(x, y, cell_width, cell_height);
             }
 
-            /*if (std::find(map_way.begin(), map_way.end(),Point(i, j))!= map_way.end()) {
+            if (std::find_if(map_way.cbegin(), map_way.cend(),
+                    [i,j](const Point&p){return p.line==i && p.column==j;})!= map_way.cend()) {
                 glColor3ub(147, 154, 152);
                 drawQUAD(x, y, cell_width, cell_height);
-            }*/
+            }
         }
     }
-}
-
-void GameMap::drawQUAD(int x, int y, int width, int height) {
-    glBegin(GL_QUADS);
-    glVertex3d(x, y, 0);
-    glVertex3d(x + width, y, 0);
-
-    glVertex3d(x + width, y + height, 0);
-    glVertex3d(x, y + height, 0);
-
-    glVertex3d(x, y + height, 0);
-    glVertex3d(x, y, 0);
-
-    glVertex3d(x + width, y, 0);
-    glVertex3d(x + width, y + height, 0);
-    glEnd();
 }
 
 core::Coord GameMap::Point2Coord(const core::Point&point){

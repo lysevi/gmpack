@@ -19,9 +19,6 @@ namespace core {
 
     typedef int map_cell;
 
-    struct Point;
-    typedef std::list<Point> PointList;
-
     struct Point {
         int line;
         int column;
@@ -46,6 +43,8 @@ namespace core {
         }
     };
 
+    typedef std::list<Point> PointList;
+
     class GameMap {
     public:
         static GameMap instance;
@@ -53,10 +52,9 @@ namespace core {
         void setLogicalSize(int width, int height);
         void setUiSize(int width, int height);
         void generateMap();
-        void draw();
+        void draw()const;
         core::Coord Point2Coord(const core::Point&point);
     private:
-        void drawQUAD(int x, int y, int width, int height);
         GameMap() = default;
         ~GameMap() = default;
     protected:
