@@ -34,6 +34,31 @@ void TDGame::OnDeactivate() {
 }
 
 void TDGame::OnLoop() {
+    if(curTime==0){
+      curTime=SDL_GetTicks();
+    }else if (curTime+unit_move_time<SDL_GetTicks()){
+        curTime = SDL_GetTicks();
+
+        UnitList removedUnits;
+        for (auto&punit:m_units) {
+            auto res = std::find_if(core::GameMap::instance.map_way.cbegin(),
+                    core::GameMap::instance.map_way.cend(),
+                    [punit](const core::Point & p) {
+                        return p.line == punit->point.line && p.column == punit->point.column;
+                    });
+            res++;
+            if(res!=core::GameMap::instance.map_way.cend()){
+                punit->point.line=res->line;
+                punit->point.column=res->column;
+                
+            }else{
+                removedUnits.push_back(punit);
+            }
+        }
+        for(auto p:removedUnits){
+            m_units.remove(p);
+        }
+    }
 }
 
 void TDGame::OnRender() {
@@ -66,8 +91,7 @@ void TDGame::OnLButtonDown(int mX, int mY){
   // вычисляем ближний конец селектирующего отрезка.
   vz = -1;
   gluUnProject(vx, vy, vz, modelview, projection, viewport, &wx, &wy, &wz);
-  logger<<"x1="<<wx<<" y1="<<wy<<" z1"<<wz<<std::endl;
-
+  
 
   for(auto&ptower:m_towers){
         if((ptower->coord.x<wx) && (ptower->coord.y<wy)
@@ -76,6 +100,15 @@ void TDGame::OnLButtonDown(int mX, int mY){
             ptower->isSelected=!ptower->isSelected;
         }
     }
+
+  for(auto&p:m_units){
+        if((p->coord.x<wx) && (p->coord.y<wy)
+          && (p->coord.y+p->size.height>wy)
+          && (p->coord.x+p->size.width>wy)){
+            p->isSelected=!p->isSelected;
+        }
+    }
+
     OnRender();
 }
 
@@ -91,7 +124,5 @@ void TDGame::generateUnits() {
     auto stower=std::make_shared<core::BaseTower>();
     stower->point.column=2;
     stower->point.line=1;
-
-    stower->isSelected=true;
     m_towers.push_back(stower);
 }

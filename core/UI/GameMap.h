@@ -28,6 +28,7 @@ namespace core {
         Point(int _line, int _column) : line(_line), column(_column) {
         }
 
+        
         bool operator==(const Point& other)const {
             return other.line == line && other.column == column;
         }

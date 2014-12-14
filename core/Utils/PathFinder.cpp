@@ -6,6 +6,7 @@
  */
 
 #include "PathFinder.h"
+#include "../Utils/ProcessLogger.h"
 #include <cmath>
 #include <list>
 #include <set>
@@ -76,6 +77,7 @@ PointList PathFinder::astar_flow(map_cell**map, const int map_height, const int 
                     break;
                 result.push_back(curpath);
             }
+            result.reverse();
             return result;
         }
 

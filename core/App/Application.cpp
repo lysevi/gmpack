@@ -74,6 +74,7 @@ bool Application::OnInit() {
     glLoadIdentity();
     glViewport(0,0,m_width,m_height);
     glOrtho(-10,m_width-10,-10,m_height-10,-100,100);
+    
     glMatrixMode(GL_MODELVIEW); // переходим в трехмерный режим
 
     std::cerr << "Init video mode done." << std::endl;

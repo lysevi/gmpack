@@ -15,17 +15,20 @@
 #include <memory>
 const int map_width=20;
 const int map_height=20;
-
+const int unit_move_time=500;
 class TDGame: public core::AppState  {
+    typedef std::list<std::shared_ptr<core::BaseTower>> TowerList;
+    typedef std::list<std::shared_ptr<core::BaseUnit>> UnitList;
     int m_width;         // ширина и высота окна
     int m_height;
     int m_map_ui_width;  // ширина и высота карты на окне
     int m_map_ui_height;
-    std::list<std::shared_ptr<core::BaseUnit>>  m_units;
-    std::list<std::shared_ptr<core::BaseTower>> m_towers;
+    UnitList  m_units;
+    TowerList m_towers;
 
     int m_cell_height;
     int m_cell_width;
+    Uint32 curTime;
 public:
     TDGame(int width, int height, int map_ui_width, int map_ui_height);
     virtual ~TDGame();

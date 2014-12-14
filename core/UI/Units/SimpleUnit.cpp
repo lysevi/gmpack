@@ -14,6 +14,8 @@ SimpleUnit::~SimpleUnit() {
 }
 
 void SimpleUnit::draw()const{
+    if(isSelected)
+        logger<<"isSelected\n";
     coord=core::GameMap::instance.Point2Coord(point);
     glBegin(GL_TRIANGLES);
     glColor3ub(255,10,255);
