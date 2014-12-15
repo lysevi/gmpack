@@ -235,9 +235,19 @@ void TDGame::OnMapClick(int line,int column, core::Object3d*obj){
         return;
     
     if(core::GameMap::instance(line,column)!= core::CellType::ROCK){
+        core::GameMap::instance.setValue(line,column,core::CellType::ROCK);
+        bool flag=core::GameMap::instance.checkNewPath();
+        
+
+        if(!flag){
+            core::GameMap::instance.setValue(line,column,core::CellType::GROUND);
+            return;
+        }
+        
         auto stower = std::make_shared<core::BaseTower>();
         stower->point.column = column;
         stower->point.line = line;
         m_towers.push_back(stower);
+        core::GameMap::instance.updateWay();
     }
 }

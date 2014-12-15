@@ -57,6 +57,9 @@ namespace core {
         core::Coord Point2Coord(const core::Point&point)const;
         Point Coord2Point(const core::Coord&c)const;
         CellType operator()(int line,int column)const;
+        void setValue(int line,int column,CellType v);
+        bool checkNewPath();
+        void updateWay();
     private:
         GameMap() = default;
         ~GameMap() = default;

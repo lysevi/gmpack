@@ -74,7 +74,20 @@ bool Application::OnInit() {
     glLoadIdentity();
     glViewport(0,0,m_width,m_height);
     glOrtho(-10,m_width-10,-10,m_height-10,-100,100);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
+    // Сглаживание точек
+    glEnable(GL_POINT_SMOOTH);
+    glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
+    // Сглаживание линий
+    //glEnable(GL_LINE_SMOOTH);
+    //glHint(GL_LINE_SMOOTH_HINT, GL_FASTEST);
+    // Сглаживание полигонов
+    glEnable(GL_POLYGON_SMOOTH);
+    glHint(GL_POLYGON_SMOOTH_HINT, GL_FASTEST);
+
     glMatrixMode(GL_MODELVIEW); // переходим в трехмерный режим
 
     std::cerr << "Init video mode done." << std::endl;

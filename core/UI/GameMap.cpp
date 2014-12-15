@@ -53,6 +53,7 @@ void GameMap::draw()const{
 
     glBegin(GL_LINES);
     glColor3ub(47, 54, 152);
+    
     glVertex3f(0, 0, 0);
     glVertex3f(m_ui_width, 0, 0);
 
@@ -121,4 +122,29 @@ Point GameMap::Coord2Point(const core::Coord&c)const{
 
 CellType GameMap::operator()(int line,int column)const{
     return m_gamemap[line][column];
+}
+
+void GameMap::setValue(int line,int column,CellType v){
+    m_gamemap[line][column]=v;
+}
+
+void GameMap::updateWay(){
+    map_way = core::PathFinder::astar_flow(m_gamemap,
+            m_logigal_height,
+            m_logigal_width,
+            startPoint,
+            endPoint);
+}
+
+bool GameMap::checkNewPath(){
+    auto newway = core::PathFinder::astar_flow(m_gamemap,
+            m_logigal_height,
+            m_logigal_width,
+            startPoint,
+            endPoint);
+    if (newway.size() == 0) {
+        return false;
+    }else{
+        return true;
+    }
 }
