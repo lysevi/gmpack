@@ -17,7 +17,6 @@ public:
     BaseUnit(const BaseUnit& orig);
     virtual ~BaseUnit();
     void draw()const;
-
 private:
 
 };

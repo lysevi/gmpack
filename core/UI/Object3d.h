@@ -26,6 +26,7 @@ namespace core
 
         virtual void draw()const=0;
         virtual void OnClick();
+        virtual  Vector3d getLogicalCenter()const;
         Vector3d getVector()const;
     public:
         int  id;

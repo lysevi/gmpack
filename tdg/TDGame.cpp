@@ -142,8 +142,11 @@ std::shared_ptr<core::BaseUnit> TDGame::getUnitById(const UnitList&ul, int id){
     else
         return *res;
 }
-
+int moveSteps=0;
 void TDGame::moveUnits() {
+    //if(moveSteps>4)
+    //    return;
+    moveSteps++;
     UnitList removedUnits;
     for (auto&punit:m_units) {
         auto res = std::find_if(core::GameMap::instance.map_way.cbegin(),
@@ -155,6 +158,7 @@ void TDGame::moveUnits() {
         if (res != core::GameMap::instance.map_way.cend()) {
             punit->point.line = res->line;
             punit->point.column = res->column;
+            punit->coord=core::GameMap::instance.Point2Coord(punit->point);
 
         } else {
             removedUnits.push_back(punit);
@@ -199,25 +203,30 @@ void TDGame::calcNewTargets(){
 }
 
 void TDGame::calcTowersAngles(){
-    for(auto pt:m_towers){
+    
+    for(auto &pt:m_towers){
         if(pt->id_of_target==-1){
             continue;
         }
 
         auto pu=getUnitById(m_units,pt->id_of_target);
 
-        auto tw=pt->getVector();
-        tw.Normalise();
-        auto un=pu->getVector();
-        un.Normalise();
+        core::Vector3d gunface_orig=pt->gun_vector;
+	core::Vector3d gunface=gunface_orig;
+	auto gun_pos = pt->getLogicalCenter();
+        auto hero_pos = pu->getLogicalCenter();
+	gunface.norm();
+	auto guard_to_her = hero_pos - gun_pos;
+	guard_to_her.norm();
+	float angle = acosf(dot(gunface, guard_to_her))*(180/3.14159265358979323846264338327);
+        
+        if ((pt->getVector().y>pu->getVector().y))
+            angle = -angle;
 
-        
-        auto res=acos(tw*un);
-        
-        pt->angle=res;
-        
-        if(pt->id==1)
-            logger<<"id="<<pt->id<<pt->angle<<"\n";
+        pt->angle=angle;
+
+
+        logger<<"id="<<pt->id<<" "<<pt->angle<<"\n";
     }
 
 }
