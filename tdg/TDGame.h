@@ -41,6 +41,8 @@ public:
     void OnLButtonDown(int mX, int mY);
     void OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Right, bool Middle);
 private:
+    void OnMapClick(int line,int column, core::Object3d*obj);
+private:
     void moveUnits();
     void generateUnits();
     void calcNewTargets();

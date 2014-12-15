@@ -17,7 +17,7 @@ namespace core {
         ROCK
     };
 
-    typedef int map_cell;
+    typedef CellType map_cell;
 
     struct Point {
         int line;
@@ -54,7 +54,9 @@ namespace core {
         void setUiSize(int width, int height);
         void generateMap();
         void draw()const;
-        core::Coord Point2Coord(const core::Point&point);
+        core::Coord Point2Coord(const core::Point&point)const;
+        Point Coord2Point(const core::Coord&c)const;
+        CellType operator()(int line,int column)const;
     private:
         GameMap() = default;
         ~GameMap() = default;
