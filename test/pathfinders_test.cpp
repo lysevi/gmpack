@@ -24,28 +24,13 @@ void init_map() {
     }
 }
 
-void show_map() {
-    for (int i = 0; i < map_height; ++i) {
-        for (int j = 0; j < map_width; ++j) {
-            std::cout << map[i][j] << " ";
-        }
-        std::cout << std::endl;
-    }
-}
-
 int main() {
     init_map();
 
-    show_map();
     auto from = core::Point{0, 0};
     auto goal = core::Point{map_height - 1, map_width - 1};
     auto path = core::PathFinder::astar_flow(map, map_height, map_width, from, goal);
 
-    for (auto it = path.begin(); it != path.end(); ++it) {
-        map[it->line][it->column] = 9;
-    }
-    std::cout << "***\n";
-    show_map();
-    
+   
     return 0;
 }

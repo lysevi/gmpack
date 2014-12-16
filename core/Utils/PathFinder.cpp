@@ -46,7 +46,7 @@ float PathFinder::heuristic_cost_estimate(Point start, Point goal) {
     return res;
 }
 
-PointList PathFinder::astar_flow(map_cell**map, const int map_height, const int map_width, Point start, Point goal) {
+PointList core::PathFinder::astar_flow(map_cell**map, const int map_height, const int map_width, Point start, Point goal) {
     PointList result;
 
     std::set<Point> closedset;
