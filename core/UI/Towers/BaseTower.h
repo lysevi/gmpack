@@ -2,7 +2,11 @@
 #pragma once
 
 #include "../Object3d.h"
+#include <memory>
 namespace core {
+    class BaseTower;
+    typedef std::shared_ptr<BaseTower> PtrTower;
+    
     class BaseTower : public Object3d {
     public:
         BaseTower();

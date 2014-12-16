@@ -18,8 +18,8 @@ const int map_height=20;
 const int unit_move_time=500;
 
 class TDGame: public core::AppState  {
-    typedef std::list<std::shared_ptr<core::BaseTower>> TowerList;
-    typedef std::list<std::shared_ptr<core::BaseUnit>> UnitList;
+    typedef std::list<core::PtrTower> TowerList;
+    typedef std::list<core::PtrUnit> UnitList;
     int m_width;         // ширина и высота окна
     int m_height;
     int m_map_ui_width;  // ширина и высота карты на окне
@@ -47,6 +47,6 @@ private:
     void generateUnits();
     void calcNewTargets();
     void calcTowersAngles();
-    std::shared_ptr<core::BaseUnit> getUnitById(const UnitList&ul, int id);
+    core::PtrUnit getUnitById(const UnitList&ul, int id);
 };
 

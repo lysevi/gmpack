@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "../Utils/MemCheckObject.h"
 #include "../Utils/Coord.h"
 #include "../Utils/Size.h"
@@ -16,6 +18,9 @@
 namespace core 
 {
     const int ZCoord=5;
+    class Object3d;
+    typedef std::shared_ptr<Object3d> PtrObject3d;
+    
     class Object3d:public MemCheckObject {
         static uint nextID;
     protected:

@@ -8,9 +8,11 @@
 #pragma once
 
 #include "../Object3d.h"
+#include <memory>
 
 namespace core{
-
+    class BaseUnit;
+    typedef std::shared_ptr<BaseUnit> PtrUnit;
 class BaseUnit:public Object3d {
 public:
     BaseUnit();

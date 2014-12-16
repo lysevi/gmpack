@@ -139,9 +139,9 @@ void TDGame::generateUnits() {
     m_towers.push_back(stower4);
 }
 
-std::shared_ptr<core::BaseUnit> TDGame::getUnitById(const UnitList&ul, int id){
+core::PtrUnit TDGame::getUnitById(const UnitList&ul, int id){
     auto res=std::find_if(ul.cbegin(),ul.cend(),
-                    [id](const std::shared_ptr<core::BaseUnit> pu)
+                    [id](const core::PtrUnit pu)
                     {return pu->id==id;});
     if(res==ul.cend())
         return nullptr;
