@@ -32,7 +32,7 @@ namespace core
         int  id;
         bool isSelected;
         Point point;
-        mutable Coord coord;
+        Coord coord;
         Size  size;
     };
 
