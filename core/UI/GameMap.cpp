@@ -51,9 +51,11 @@ void GameMap::draw()const{
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
+    // рисуем сетку
     glBegin(GL_LINES);
     glColor3ub(47, 54, 152);
     
+    // очерчиваем поле линиями (квадрат)
     glVertex3f(0, 0, 0);
     glVertex3f(m_ui_width, 0, 0);
 
@@ -79,6 +81,7 @@ void GameMap::draw()const{
     }
     glEnd();
 
+    // рисуем ячейки - скалы.
     for (int i = 0; i < m_logigal_height; ++i) {
         auto y = i*cell_height;
 
