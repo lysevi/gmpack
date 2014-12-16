@@ -118,24 +118,28 @@ void TDGame::generateUnits() {
     stower->point.column = 2;
     stower->point.line = 1;
     stower->id_of_target=sunit->id;
+    stower->updateCoord();
     m_towers.push_back(stower);
 
     auto stower2 = std::make_shared<core::BaseTower>();
     stower2->point.column = 2;
     stower2->point.line = 5;
     stower2->id_of_target=sunit->id;
+    stower2->updateCoord();
     m_towers.push_back(stower2);
 
     auto stower3 = std::make_shared<core::BaseTower>();
     stower3->point.column = 2;
     stower3->point.line = 10;
     stower3->id_of_target=sunit->id;
+    stower3->updateCoord();
     m_towers.push_back(stower3);
 
     auto stower4 = std::make_shared<core::BaseTower>();
     stower4->point.column = 2;
     stower4->point.line = 15;
     stower4->id_of_target=sunit->id;
+    stower4->updateCoord();
     m_towers.push_back(stower4);
 }
 
@@ -247,6 +251,7 @@ void TDGame::OnMapClick(int line,int column, core::Object3d*obj){
         auto stower = std::make_shared<core::BaseTower>();
         stower->point.column = column;
         stower->point.line = line;
+        stower->updateCoord();
         m_towers.push_back(stower);
         core::GameMap::instance.updateWay();
     }

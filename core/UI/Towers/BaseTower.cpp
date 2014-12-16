@@ -30,6 +30,10 @@ void BaseTower::setRadius(int newRadius){
     m_radius=newRadius;
 }
 
+void BaseTower::updateCoord(){
+    coord=GameMap::instance.Point2Coord(point);
+}
+
 void BaseTower::draw()const{
     
     if(isSelected){
@@ -41,7 +45,7 @@ void BaseTower::draw()const{
                 m_radius,
                 50);
     }
-    coord=GameMap::instance.Point2Coord(point);
+    
     glLoadName(id);
     glBegin(GL_POLYGON);
     glColor3ub(255,100,4);
