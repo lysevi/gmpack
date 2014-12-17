@@ -60,6 +60,7 @@ namespace core {
         void setValue(int line,int column,CellType v);
         bool checkNewPath();
         void updateWay();
+        void changeCell(int line,int column, CellType ctype);
     private:
         GameMap() = default;
         ~GameMap() = default;

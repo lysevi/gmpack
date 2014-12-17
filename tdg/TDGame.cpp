@@ -109,38 +109,35 @@ void TDGame::OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Rig
 
 }
 
+void TDGame::placeTower(int line,int column, core::PtrTower tower){
+    tower->point.column = column;
+    tower->point.line = line;
+    tower->updateCoord();
+    m_towers.push_back(tower);
+    core::GameMap::instance.changeCell(line,column,core::CellType::ROCK);
+}
+
 void TDGame::generateUnits() {
     auto sunit = std::make_shared<core::SimpleUnit>();
     sunit->point = {0, 0};
     m_units.push_back(sunit);
 
     auto stower = std::make_shared<core::BaseTower>();
-    stower->point.column = 2;
-    stower->point.line = 1;
     stower->id_of_target=sunit->id;
-    stower->updateCoord();
-    m_towers.push_back(stower);
+    placeTower(1, 2,stower);
 
     auto stower2 = std::make_shared<core::BaseTower>();
-    stower2->point.column = 2;
-    stower2->point.line = 5;
     stower2->id_of_target=sunit->id;
-    stower2->updateCoord();
-    m_towers.push_back(stower2);
+    placeTower(5, 2,stower2);
 
     auto stower3 = std::make_shared<core::BaseTower>();
-    stower3->point.column = 2;
-    stower3->point.line = 10;
     stower3->id_of_target=sunit->id;
-    stower3->updateCoord();
-    m_towers.push_back(stower3);
+    placeTower(10, 2,stower3);
 
     auto stower4 = std::make_shared<core::BaseTower>();
-    stower4->point.column = 2;
-    stower4->point.line = 15;
+    
     stower4->id_of_target=sunit->id;
-    stower4->updateCoord();
-    m_towers.push_back(stower4);
+    placeTower(15, 2,stower4);
 }
 
 core::PtrUnit TDGame::getUnitById(const UnitList&ul, int id){

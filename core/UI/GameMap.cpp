@@ -6,6 +6,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <algorithm>
+#include <assert.h>
 
 using namespace core;
 
@@ -150,4 +151,11 @@ bool GameMap::checkNewPath(){
     }else{
         return true;
     }
+}
+
+void GameMap::changeCell(int line,int column, CellType ctype){
+    assert(line<m_logigal_height);
+    assert(column<m_logigal_width);
+
+    m_gamemap[line][column]=ctype;
 }

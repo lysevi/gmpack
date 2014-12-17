@@ -40,6 +40,8 @@ public:
     void OnRender();
     void OnLButtonDown(int mX, int mY);
     void OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Right, bool Middle);
+
+    void placeTower(int line,int column, core::PtrTower tower);
 private:
     void OnMapClick(int line,int column, core::Object3d*obj);
 private:
