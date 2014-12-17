@@ -6,8 +6,10 @@
  */
 
 #include "TDGame.h"
+#include "UI/Towers/TowerManager.h"
 #include <Utils/ProcessLogger.h>
 #include <Math/Vector3d.h>
+#include <UI/Units/UnitManager.h>
 #include <GL/gl.h> // Библиотека OpenGL
 #include <GL/glu.h> // Библиотека GLU
 #include <algorithm>
@@ -30,9 +32,13 @@ TDGame::~TDGame() {
 }
 
 void TDGame::OnActivate() {
+    core::UnitManager::start();
+    core::TowerManager::start();
 }
 
 void TDGame::OnDeactivate() {
+    core::UnitManager::stop();
+    core::TowerManager::stop();
 }
 
 void TDGame::OnLoop() {
@@ -53,11 +59,11 @@ void TDGame::OnRender() {
     glInitNames();
     glPushName(0);
     core::GameMap::instance.draw();
-    for (auto punit:m_units) {
+    for (auto punit:core::UnitManager::get()->units) {
         punit->draw();
     }
 
-    for (auto pt:m_towers) {
+    for (auto pt:core::TowerManager::get()->towers) {
         pt->draw();
     }
 }
@@ -83,8 +89,8 @@ void TDGame::OnLButtonDown(int mX, int mY) {
     core::Coord coord{(int)wx,(int)wy};
     auto p=core::GameMap::instance.Coord2Point(coord);
     
-    TowerList::value_type selectedTower;
-    for (auto&ptower:m_towers) {
+    core::TowerList::value_type selectedTower;
+    for (auto&ptower:core::TowerManager::get()->towers) {
         if ((ptower->coord.x < wx) && (ptower->coord.y < wy)
                 && (ptower->coord.y + ptower->size.height > wy)
                 && (ptower->coord.x + ptower->size.width > wx)) {
@@ -94,7 +100,7 @@ void TDGame::OnLButtonDown(int mX, int mY) {
         }
     }
     OnMapClick(p.line,p.column,selectedTower.get());
-    for (auto&p:m_units) {
+    for (auto&p:core::UnitManager::get()->units) {
         if ((p->coord.x < wx) && (p->coord.y < wy)
                 && (p->coord.y + p->size.height > wy)
                 && (p->coord.x + p->size.width > wx)) {
@@ -113,14 +119,14 @@ void TDGame::placeTower(int line,int column, core::PtrTower tower){
     tower->point.column = column;
     tower->point.line = line;
     tower->updateCoord();
-    m_towers.push_back(tower);
+    core::TowerManager::get()->towers.push_back(tower);
     core::GameMap::instance.changeCell(line,column,core::CellType::ROCK);
 }
 
 void TDGame::generateUnits() {
     auto sunit = std::make_shared<core::SimpleUnit>();
     sunit->point = {0, 0};
-    m_units.push_back(sunit);
+    core::UnitManager::get()->append(sunit);
 
     auto stower = std::make_shared<core::BaseTower>();
     stower->id_of_target=sunit->id;
@@ -140,19 +146,9 @@ void TDGame::generateUnits() {
     placeTower(15, 2,stower4);
 }
 
-core::PtrUnit TDGame::getUnitById(const UnitList&ul, int id){
-    auto res=std::find_if(ul.cbegin(),ul.cend(),
-                    [id](const core::PtrUnit pu)
-                    {return pu->id==id;});
-    if(res==ul.cend())
-        return nullptr;
-    else
-        return *res;
-}
-
 void TDGame::moveUnits() {
-    UnitList removedUnits;
-    for (auto&punit:m_units) {
+    core::UnitList removedUnits;
+    for (auto&punit:core::UnitManager::get()->units) {
         auto res = std::find_if(core::GameMap::instance.map_way.cbegin(),
                 core::GameMap::instance.map_way.cend(),
                 [punit](const core::Point & p) {
@@ -169,15 +165,15 @@ void TDGame::moveUnits() {
         }
     }
     for (auto p:removedUnits) {
-        m_units.remove(p);
+        core::UnitManager::get()->units.remove(p);
     }
 }
 
 void TDGame::calcNewTargets(){
-    for(auto pt:m_towers){
-        UnitList closesUnit;// досягаемые враги.
+    for(auto pt:core::TowerManager::get()->towers){
+        core::UnitList closesUnit;// досягаемые враги.
         core::Coord towerCoord=pt->coord;
-        for(auto pu:m_units){
+        for(auto pu:core::UnitManager::get()->units){
             core::Coord unit_coord=core::GameMap::instance.Point2Coord(pu->point);
             if(core::Coord::distance(towerCoord,unit_coord)<pt->getRadius()){
                 closesUnit.push_back(pu);
@@ -194,7 +190,7 @@ void TDGame::calcNewTargets(){
         if(pt->id_of_target!=-1){
             // проверяем, что он все еще досягаем.
             auto id_of_target=pt->id_of_target;
-            auto res=getUnitById(closesUnit,id_of_target);
+            auto res=core::UnitManager::get()->getUnitById(id_of_target);
             // если все еще досягаем
             if(res!=nullptr){
                 continue;
@@ -207,12 +203,12 @@ void TDGame::calcNewTargets(){
 
 void TDGame::calcTowersAngles(){
     
-    for(auto &pt:m_towers){
+    for(auto &pt:core::TowerManager::get()->towers){
         if(pt->id_of_target==-1){
             continue;
         }
 
-        auto pu=getUnitById(m_units,pt->id_of_target);
+        auto pu=core::UnitManager::get()->getUnitById(pt->id_of_target);
 
         core::Vector3d gunface_orig=pt->gun_vector;
 	core::Vector3d gunface=gunface_orig;
@@ -246,10 +242,8 @@ void TDGame::OnMapClick(int line,int column, core::Object3d*obj){
         }
         
         auto stower = std::make_shared<core::BaseTower>();
-        stower->point.column = column;
-        stower->point.line = line;
         stower->updateCoord();
-        m_towers.push_back(stower);
         core::GameMap::instance.updateWay();
+        placeTower(line,column,stower);
     }
 }
