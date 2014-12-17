@@ -32,6 +32,7 @@ TDGame::~TDGame() {
 }
 
 void TDGame::OnActivate() {
+    core::ProcessLogger::start();
     core::UnitManager::start();
     core::TowerManager::start();
 }
@@ -39,6 +40,7 @@ void TDGame::OnActivate() {
 void TDGame::OnDeactivate() {
     core::UnitManager::stop();
     core::TowerManager::stop();
+    core::ProcessLogger::stop();
 }
 
 void TDGame::OnLoop() {

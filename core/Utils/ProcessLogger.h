@@ -10,15 +10,16 @@
 #include <string>
 #include "ILogWriter.h"
 
-#define logger          core::ProcessLogger::getInstance()->GetStream()
+#define logger          core::ProcessLogger::get()->GetStream()
 
 using std::endl;
 namespace core {
 
     class ProcessLogger : public ILogWriter {
     public:
-        static ProcessLogger* getInstance();
-
+        static ProcessLogger* get();
+        static void start();
+        static void stop();
         virtual std::ostream& GetStream();
 
         void setLevel(uint16_t level) {
