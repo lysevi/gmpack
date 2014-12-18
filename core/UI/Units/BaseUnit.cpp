@@ -21,3 +21,13 @@ BaseUnit::~BaseUnit() {
 
 void BaseUnit::draw()const{
 }
+
+bool BaseUnit::tryFillPath(){
+    auto tmplist=core::GameMap::instance.getWay(point);
+    if(tmplist.size()==0){
+        return false;
+    }else{
+        path=tmplist;
+        return true;
+    }
+}

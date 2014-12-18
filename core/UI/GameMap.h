@@ -58,8 +58,7 @@ namespace core {
         Point Coord2Point(const core::Coord&c)const;
         CellType operator()(int line,int column)const;
         void setValue(int line,int column,CellType v);
-        bool checkNewPath();
-        void updateWay();
+        core::PointList getWay(core::Point startPoint);
         void changeCell(int line,int column, CellType ctype);
     private:
         GameMap() = default;
@@ -77,6 +76,5 @@ namespace core {
         int cell_width;
         Point startPoint;
         Point endPoint;
-        PointList map_way;
     };
 }

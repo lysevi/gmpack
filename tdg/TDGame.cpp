@@ -149,7 +149,8 @@ void TDGame::generateUnits() {
 }
 
 void TDGame::moveUnits() {
-    core::UnitList removedUnits;
+    core::UnitManager::get()->moveUnits();
+    /*core::UnitList removedUnits;
     for (auto&punit:core::UnitManager::get()->units) {
         auto res = std::find_if(core::GameMap::instance.map_way.cbegin(),
                 core::GameMap::instance.map_way.cend(),
@@ -168,7 +169,7 @@ void TDGame::moveUnits() {
     }
     for (auto p:removedUnits) {
         core::UnitManager::get()->units.remove(p);
-    }
+    }*/
 }
 
 void TDGame::calcNewTargets(){
@@ -235,17 +236,16 @@ void TDGame::OnMapClick(int line,int column, core::Object3d*obj){
     
     if(core::GameMap::instance(line,column)!= core::CellType::ROCK){
         core::GameMap::instance.setValue(line,column,core::CellType::ROCK);
-        bool flag=core::GameMap::instance.checkNewPath();
-        
+        bool flag=core::UnitManager::get()->tryMakeNewWays();
 
         if(!flag){
             core::GameMap::instance.setValue(line,column,core::CellType::GROUND);
+            core::UnitManager::get()->tryMakeNewWays();
             return;
         }
         
         auto stower = std::make_shared<core::BaseTower>();
         stower->updateCoord();
-        core::GameMap::instance.updateWay();
         placeTower(line,column,stower);
     }
 }

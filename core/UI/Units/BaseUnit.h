@@ -8,19 +8,22 @@
 #pragma once
 
 #include "../Object3d.h"
+#include "../GameMap.h"
 #include <memory>
 
-namespace core{
+namespace core {
     class BaseUnit;
     typedef std::shared_ptr<BaseUnit> PtrUnit;
-class BaseUnit:public Object3d {
-public:
-    BaseUnit();
-    BaseUnit(const BaseUnit& orig);
-    virtual ~BaseUnit();
-    void draw()const;
-private:
 
-};
+    class BaseUnit : public Object3d {
+    public:
+        BaseUnit();
+        BaseUnit(const BaseUnit& orig);
+        bool tryFillPath();
+        virtual ~BaseUnit();
+        void draw()const;
+    public:
+        core::PointList path;
+    };
 
 }

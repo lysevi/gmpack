@@ -2,6 +2,7 @@
 #include "../Utils/PathFinder.h"
 #include "../Utils/Exception.h"
 #include "../Utils/Coord.h"
+#include "Units/UnitManager.h"
 #include "Helpers.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -37,15 +38,6 @@ void GameMap::generateMap(){
     
     startPoint = {0, 0};
     endPoint = {0, m_logigal_width - 1};
-
-    map_way = core::PathFinder::astar_flow(m_gamemap,
-            m_logigal_height,
-            m_logigal_width,
-            startPoint,
-            endPoint);
-    if (map_way.size() == 0) {
-        throw core::Exception::CreateAndLog(POSITION, " way not found");
-    }
 }
 
 void GameMap::draw()const{
@@ -101,10 +93,12 @@ void GameMap::draw()const{
                 drawQUAD(x, y,0, cell_width, cell_height);
             }
 
-            if (std::find_if(map_way.cbegin(), map_way.cend(),
-                    [i,j](const Point&p){return p.line==i && p.column==j;})!= map_way.cend()) {
-                glColor3ub(147, 154, 152);
-                drawQUAD(x, y,0, cell_width, cell_height);
+            for(auto pu:core::UnitManager::get()->units){
+                if(std::find_if(pu->path.cbegin(), pu->path.cend(),
+                    [i,j](const Point&p){return p.line==i && p.column==j;})!= pu->path.cend()) {
+                        glColor3ub(147, 154, 152);
+                        drawQUAD(x, y,0, cell_width, cell_height);
+                    }
             }
         }
     }
@@ -132,25 +126,12 @@ void GameMap::setValue(int line,int column,CellType v){
     m_gamemap[line][column]=v;
 }
 
-void GameMap::updateWay(){
-    map_way = core::PathFinder::astar_flow(m_gamemap,
+core::PointList GameMap::getWay(core::Point _startPoint){
+    return  core::PathFinder::astar_flow(m_gamemap,
             m_logigal_height,
             m_logigal_width,
-            startPoint,
+            _startPoint,
             endPoint);
-}
-
-bool GameMap::checkNewPath(){
-    auto newway = core::PathFinder::astar_flow(m_gamemap,
-            m_logigal_height,
-            m_logigal_width,
-            startPoint,
-            endPoint);
-    if (newway.size() == 0) {
-        return false;
-    }else{
-        return true;
-    }
 }
 
 void GameMap::changeCell(int line,int column, CellType ctype){
