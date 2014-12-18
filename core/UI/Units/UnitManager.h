@@ -15,7 +15,7 @@ namespace core {
         virtual ~UnitManager();
         core::PtrUnit getUnitById(int id);
         void append(core::PtrUnit punit);
-        void moveUnits();
+        void nextStep();
         bool tryMakeNewWays(); // пытается обновить у всех юнитов путь.
         UnitList units;
     private:

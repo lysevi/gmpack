@@ -40,7 +40,7 @@ void UnitManager::append(core::PtrUnit punit) {
     units.push_back(punit);
 }
 
-void UnitManager::moveUnits(){
+void UnitManager::nextStep(){
     core::UnitList removedUnits;
     for (auto&punit:units) {
         auto res = std::find_if(punit->path.cbegin(),

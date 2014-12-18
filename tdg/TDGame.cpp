@@ -149,27 +149,7 @@ void TDGame::generateUnits() {
 }
 
 void TDGame::moveUnits() {
-    core::UnitManager::get()->moveUnits();
-    /*core::UnitList removedUnits;
-    for (auto&punit:core::UnitManager::get()->units) {
-        auto res = std::find_if(core::GameMap::instance.map_way.cbegin(),
-                core::GameMap::instance.map_way.cend(),
-                [punit](const core::Point & p) {
-                    return p.line == punit->point.line && p.column == punit->point.column;
-                });
-        res++;
-        if (res != core::GameMap::instance.map_way.cend()) {
-            punit->point.line = res->line;
-            punit->point.column = res->column;
-            punit->coord=core::GameMap::instance.Point2Coord(punit->point);
-
-        } else {
-            removedUnits.push_back(punit);
-        }
-    }
-    for (auto p:removedUnits) {
-        core::UnitManager::get()->units.remove(p);
-    }*/
+    core::UnitManager::get()->nextStep();
 }
 
 void TDGame::calcNewTargets(){
