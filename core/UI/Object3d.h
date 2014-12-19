@@ -37,6 +37,7 @@ namespace core
         bool isSelected;
         Point point;
         Vector3d position;
+        Vector3d orientation; // куда повернуто "лицо" объекта
         Size  size;
     };
 

@@ -11,9 +11,9 @@ BaseTower::BaseTower() {
     this->m_radius=GameMap::instance.cell_width*3;
     angle=0;
 
-    gun_vector.x=this->size.width*4;
-    gun_vector.y=0;
-    gun_vector.z=ZCoord+1;
+    orientation.x=this->size.width*4;
+    orientation.y=0;
+    orientation.z=ZCoord+1;
 }
 
 BaseTower::BaseTower(const BaseTower& orig) {
@@ -65,8 +65,8 @@ void BaseTower::draw()const{
         glRotated(angle, 0, 0, 1);
     glBegin(GL_LINES);
         glColor3ub(255, 255, 255);
-        glVertex3d(0, 0, gun_vector.z);
-        glVertex3d(gun_vector.x/8, gun_vector.y, gun_vector.z);
+        glVertex3d(0, 0, orientation.z);
+        glVertex3d(orientation.x/8, orientation.y, orientation.z);
     glEnd();
     glPopMatrix();
     glLoadIdentity();

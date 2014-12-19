@@ -82,7 +82,7 @@ void TowerManager::calcTowersAngles(){
 
         auto pu=core::UnitManager::get()->getUnitById(pt->id_of_target);
 
-        core::Vector3d gunface_orig=pt->gun_vector;
+        core::Vector3d gunface_orig=pt->orientation;
 	core::Vector3d gunface=gunface_orig;
 	auto gun_pos = pt->getLogicalCenter();
         auto hero_pos = pu->getLogicalCenter();
