@@ -19,6 +19,7 @@ namespace core {
         bool tryMakeNewWays(); // пытается обновить у всех юнитов путь.
         UnitList units;
     private:
+        void calcNewPosition(PtrUnit punit)const;
         UnitManager();
         UnitManager(const UnitManager& orig) = delete;
     };

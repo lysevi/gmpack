@@ -15,7 +15,7 @@
 #include <memory>
 const int map_width = 20;
 const int map_height = 20;
-const int unit_move_time = 500;
+const int unit_move_time = 25;
 
 class TDGame : public core::AppState {
     int m_width; // ширина и высота окна

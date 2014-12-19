@@ -48,4 +48,6 @@ namespace core {
     Vector3d operator*(const Vector3d&left, const Vector3d&right);
 
     float dot(const Vector3d&left, const Vector3d&right);
+
+    float distance(const Vector3d&from, const Vector3d&to);
 }

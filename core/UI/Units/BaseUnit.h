@@ -13,9 +13,12 @@
 
 namespace core {
     class BaseUnit;
+    
     typedef std::shared_ptr<BaseUnit> PtrUnit;
 
+    
     class BaseUnit : public Object3d {
+        
     public:
         BaseUnit();
         BaseUnit(const BaseUnit& orig);
@@ -23,7 +26,12 @@ namespace core {
         virtual ~BaseUnit();
         void draw()const;
     public:
+        
+    public:
         core::PointList path;
+        core::Point    dest_point;
+        core::Vector3d dest_position;
+        core::Vector3d move_speed;
     };
 
 }

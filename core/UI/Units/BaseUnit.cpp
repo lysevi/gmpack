@@ -11,6 +11,7 @@ using namespace core;
 BaseUnit::BaseUnit() {
     size.height=core::GameMap::instance.cell_height;
     size.width=core::GameMap::instance.cell_width;
+    move_speed.x=move_speed.y=3;
 }
 
 BaseUnit::BaseUnit(const BaseUnit& orig) {
