@@ -6,7 +6,7 @@
 
 namespace core {
     typedef std::list<core::PtrTower> TowerList;
-    
+
     class TowerManager {
     public:
         static TowerManager* get();

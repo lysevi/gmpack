@@ -41,59 +41,59 @@ void TowerManager::append(core::PtrTower punit) {
     towers.push_back(punit);
 }
 
-void TowerManager::calcNewTargets(){
-    for(auto pt:towers){
-        core::UnitList closesUnit;// досягаемые враги.
-        core::Vector3d towerCoord=pt->position;
-        for(auto pu:core::UnitManager::get()->units){
-            core::Vector3d unit_coord=core::GameMap::instance.Point2Position(pu->point);
-            auto dist=(towerCoord-unit_coord).length();
-            if(dist<pt->getRadius()){
+void TowerManager::calcNewTargets() {
+    for (auto pt:towers) {
+        core::UnitList closesUnit; // досягаемые враги.
+        core::Vector3d towerCoord = pt->position;
+        for (auto pu:core::UnitManager::get()->units) {
+            core::Vector3d unit_coord = core::GameMap::instance.Point2Position(pu->point);
+            auto dist = (towerCoord - unit_coord).length();
+            if (dist < pt->getRadius()) {
                 closesUnit.push_back(pu);
             }
         }
-        if(closesUnit.size()==0){
-            pt->id_of_target=-1;
+        if (closesUnit.size() == 0) {
+            pt->id_of_target = -1;
             continue;
         }
-        if(pt->id_of_target==-1){
-            pt->id_of_target=closesUnit.front()->id;
+        if (pt->id_of_target == -1) {
+            pt->id_of_target = closesUnit.front()->id;
         }
         // если уже целимся в кого то.
-        if(pt->id_of_target!=-1){
+        if (pt->id_of_target != -1) {
             // проверяем, что он все еще досягаем.
-            auto id_of_target=pt->id_of_target;
-            auto res=core::UnitManager::get()->getUnitById(id_of_target);
+            auto id_of_target = pt->id_of_target;
+            auto res = core::UnitManager::get()->getUnitById(id_of_target);
             // если все еще досягаем
-            if(res!=nullptr){
+            if (res != nullptr) {
                 continue;
-            }else{
-                pt->id_of_target=closesUnit.front()->id;
+            } else {
+                pt->id_of_target = closesUnit.front()->id;
             }
         }
     }
 }
 
-void TowerManager::calcTowersAngles(){
-    for(auto &pt:towers){
-        if(pt->id_of_target==-1){
+void TowerManager::calcTowersAngles() {
+    for (auto &pt:towers) {
+        if (pt->id_of_target == -1) {
             continue;
         }
 
-        auto pu=core::UnitManager::get()->getUnitById(pt->id_of_target);
+        auto pu = core::UnitManager::get()->getUnitById(pt->id_of_target);
 
-        core::Vector3d gunface_orig=pt->orientation;
-	core::Vector3d gunface=gunface_orig;
-	auto gun_pos = pt->getLogicalCenter();
+        core::Vector3d gunface_orig = pt->orientation;
+        core::Vector3d gunface = gunface_orig;
+        auto gun_pos = pt->getLogicalCenter();
         auto hero_pos = pu->getLogicalCenter();
-	gunface.norm();
-	auto guard_to_her = hero_pos - gun_pos;
-	guard_to_her.norm();
-	float angle = acosf(dot(gunface, guard_to_her))*(180/3.14159265358979323846264338327);
+        gunface.norm();
+        auto guard_to_her = hero_pos - gun_pos;
+        guard_to_her.norm();
+        float angle = acosf(dot(gunface, guard_to_her))*(180 / 3.14159265358979323846264338327);
 
-        if ((pt->getVector().y>pu->getVector().y))
+        if ((pt->getVector().y > pu->getVector().y))
             angle = -angle;
 
-        pt->angle=angle;
+        pt->angle = angle;
     }
 }

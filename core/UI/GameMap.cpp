@@ -22,7 +22,7 @@ void GameMap::setUiSize(int width, int height) {
     m_ui_width = width;
 }
 
-void GameMap::generateMap(){
+void GameMap::generateMap() {
     cell_height = (m_ui_height / m_logigal_height);
     cell_width = (m_ui_width / m_logigal_width);
 
@@ -34,19 +34,19 @@ void GameMap::generateMap(){
     for (int i = 0; i < m_logigal_height - 1; ++i) {
         m_gamemap[i][1] = core::CellType::ROCK;
     }
-    
+
     startPoint = {0, 0};
     endPoint = {0, m_logigal_width - 1};
 }
 
-void GameMap::draw()const{
+void GameMap::draw()const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
     // рисуем сетку
     glBegin(GL_LINES);
     glColor3ub(47, 54, 152);
-    
+
     // очерчиваем поле линиями (квадрат)
     glVertex3f(0, 0, 0);
     glVertex3f(m_ui_width, 0, 0);
@@ -82,60 +82,62 @@ void GameMap::draw()const{
             auto x = j*cell_width;
             if (m_gamemap[i][j] == core::CellType::ROCK) {
                 glColor3ub(47, 54, 152);
-                drawQUAD(x, y,0, cell_width, cell_height);
+                drawQUAD(x, y, 0, cell_width, cell_height);
             }
 
             if ((startPoint.line == i && startPoint.column == j) ||
                     (endPoint.line == i && endPoint.column == j)) {
 
                 glColor3ub(147, 154, 152);
-                drawQUAD(x, y,0, cell_width, cell_height);
+                drawQUAD(x, y, 0, cell_width, cell_height);
             }
 
-            for(auto pu:core::UnitManager::get()->units){
-                if(std::find_if(pu->path.cbegin(), pu->path.cend(),
-                    [i,j](const Point&p){return p.line==i && p.column==j;})!= pu->path.cend()) {
-                        glColor3ub(147, 154, 152);
-                        drawQUAD(x, y,0, cell_width, cell_height);
-                    }
+            for (auto pu:core::UnitManager::get()->units) {
+                if (std::find_if(pu->path.cbegin(), pu->path.cend(),
+                        [i, j](const Point & p) {
+                            return p.line == i && p.column == j;
+                        }) != pu->path.cend()) {
+                glColor3ub(147, 154, 152);
+                drawQUAD(x, y, 0, cell_width, cell_height);
+            }
             }
         }
     }
 }
 
-core::Vector3d GameMap::Point2Position(const core::Point&point)const{
+core::Vector3d GameMap::Point2Position(const core::Point&point)const {
     core::Vector3d result;
-    result.x=point.column*cell_width;
-    result.y=point.line*cell_height;
+    result.x = point.column*cell_width;
+    result.y = point.line*cell_height;
     return result;
 }
 
-Point GameMap::Position2Point(const core::Vector3d&c)const{
+Point GameMap::Position2Point(const core::Vector3d&c)const {
     Point result;
-    result.line=c.y/cell_height;
-    result.column=c.x/cell_width;
+    result.line = c.y / cell_height;
+    result.column = c.x / cell_width;
     return result;
 }
 
-CellType GameMap::operator()(int line,int column)const{
+CellType GameMap::operator()(int line, int column) const {
     return m_gamemap[line][column];
 }
 
-void GameMap::setValue(int line,int column,CellType v){
-    m_gamemap[line][column]=v;
+void GameMap::setValue(int line, int column, CellType v) {
+    m_gamemap[line][column] = v;
 }
 
-core::PointList GameMap::getWay(core::Point _startPoint){
-    return  core::PathFinder::astar_flow(m_gamemap,
+core::PointList GameMap::getWay(core::Point _startPoint) {
+    return core::PathFinder::astar_flow(m_gamemap,
             m_logigal_height,
             m_logigal_width,
             _startPoint,
             endPoint);
 }
 
-void GameMap::changeCell(int line,int column, CellType ctype){
-    assert(line<m_logigal_height);
-    assert(column<m_logigal_width);
+void GameMap::changeCell(int line, int column, CellType ctype) {
+    assert(line < m_logigal_height);
+    assert(column < m_logigal_width);
 
-    m_gamemap[line][column]=ctype;
+    m_gamemap[line][column] = ctype;
 }

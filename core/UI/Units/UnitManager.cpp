@@ -40,7 +40,7 @@ void UnitManager::append(core::PtrUnit punit) {
     units.push_back(punit);
 }
 
-void UnitManager::nextStep(){
+void UnitManager::nextStep() {
     core::UnitList removedUnits;
     for (auto&punit:units) {
         auto res = std::find_if(punit->path.cbegin(),
@@ -52,7 +52,7 @@ void UnitManager::nextStep(){
         if (res != punit->path.cend()) {
             punit->point.line = res->line;
             punit->point.column = res->column;
-            punit->position=core::GameMap::instance.Point2Position(punit->point);
+            punit->position = core::GameMap::instance.Point2Position(punit->point);
 
         } else {
             removedUnits.push_back(punit);
@@ -63,9 +63,9 @@ void UnitManager::nextStep(){
     }
 }
 
-bool UnitManager::tryMakeNewWays(){
-    for(auto pu:units){
-        if(!pu->tryFillPath())
+bool UnitManager::tryMakeNewWays() {
+    for (auto pu:units) {
+        if (!pu->tryFillPath())
             return false;
     }
     return true;

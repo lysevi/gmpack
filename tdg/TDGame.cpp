@@ -54,7 +54,7 @@ void TDGame::OnLoop() {
         calcTowersAngles();
         OnRender();
     }
-    
+
 }
 
 void TDGame::OnRender() {
@@ -88,20 +88,20 @@ void TDGame::OnLButtonDown(int mX, int mY) {
     vz = -1;
     gluUnProject(vx, vy, vz, modelview, projection, viewport, &wx, &wy, &wz);
 
-    core::Vector3d position{(float)wx,(float)wy,(float)0};
-    auto p=core::GameMap::instance.Position2Point(position);
-    
+    core::Vector3d position{(float) wx, (float) wy, (float) 0};
+    auto p = core::GameMap::instance.Position2Point(position);
+
     core::TowerList::value_type selectedTower;
     for (auto&ptower:core::TowerManager::get()->towers) {
         if ((ptower->position.x < wx) && (ptower->position.y < wy)
                 && (ptower->position.y + ptower->size.height > wy)
                 && (ptower->position.x + ptower->size.width > wx)) {
             ptower->isSelected = !ptower->isSelected;
-            selectedTower=ptower;
+            selectedTower = ptower;
             break;
         }
     }
-    OnMapClick(p.line,p.column,selectedTower.get());
+    OnMapClick(p.line, p.column, selectedTower.get());
     for (auto&p:core::UnitManager::get()->units) {
         if ((p->position.x < wx) && (p->position.y < wy)
                 && (p->position.y + p->size.height > wy)
@@ -117,12 +117,12 @@ void TDGame::OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Rig
 
 }
 
-void TDGame::placeTower(int line,int column, core::PtrTower tower){
+void TDGame::placeTower(int line, int column, core::PtrTower tower) {
     tower->point.column = column;
     tower->point.line = line;
     tower->updatePosition();
     core::TowerManager::get()->towers.push_back(tower);
-    core::GameMap::instance.changeCell(line,column,core::CellType::ROCK);
+    core::GameMap::instance.changeCell(line, column, core::CellType::ROCK);
 }
 
 void TDGame::generateUnits() {
@@ -131,51 +131,51 @@ void TDGame::generateUnits() {
     core::UnitManager::get()->append(sunit);
 
     auto stower = std::make_shared<core::BaseTower>();
-    stower->id_of_target=sunit->id;
-    placeTower(1, 2,stower);
+    stower->id_of_target = sunit->id;
+    placeTower(1, 2, stower);
 
     auto stower2 = std::make_shared<core::BaseTower>();
-    stower2->id_of_target=sunit->id;
-    placeTower(5, 2,stower2);
+    stower2->id_of_target = sunit->id;
+    placeTower(5, 2, stower2);
 
     auto stower3 = std::make_shared<core::BaseTower>();
-    stower3->id_of_target=sunit->id;
-    placeTower(10, 2,stower3);
+    stower3->id_of_target = sunit->id;
+    placeTower(10, 2, stower3);
 
     auto stower4 = std::make_shared<core::BaseTower>();
-    
-    stower4->id_of_target=sunit->id;
-    placeTower(15, 2,stower4);
+
+    stower4->id_of_target = sunit->id;
+    placeTower(15, 2, stower4);
 }
 
 void TDGame::moveUnits() {
     core::UnitManager::get()->nextStep();
 }
 
-void TDGame::calcNewTargets(){
+void TDGame::calcNewTargets() {
     core::TowerManager::get()->calcNewTargets();
 }
 
-void TDGame::calcTowersAngles(){
+void TDGame::calcTowersAngles() {
     core::TowerManager::get()->calcTowersAngles();
 }
 
-void TDGame::OnMapClick(int line,int column, core::Object3d*obj){
-    if(obj!=nullptr)
+void TDGame::OnMapClick(int line, int column, core::Object3d*obj) {
+    if (obj != nullptr)
         return;
-    
-    if(core::GameMap::instance(line,column)!= core::CellType::ROCK){
-        core::GameMap::instance.setValue(line,column,core::CellType::ROCK);
-        bool flag=core::UnitManager::get()->tryMakeNewWays();
 
-        if(!flag){
-            core::GameMap::instance.setValue(line,column,core::CellType::GROUND);
+    if (core::GameMap::instance(line, column) != core::CellType::ROCK) {
+        core::GameMap::instance.setValue(line, column, core::CellType::ROCK);
+        bool flag = core::UnitManager::get()->tryMakeNewWays();
+
+        if (!flag) {
+            core::GameMap::instance.setValue(line, column, core::CellType::GROUND);
             core::UnitManager::get()->tryMakeNewWays();
             return;
         }
-        
+
         auto stower = std::make_shared<core::BaseTower>();
         stower->updatePosition();
-        placeTower(line,column,stower);
+        placeTower(line, column, stower);
     }
 }

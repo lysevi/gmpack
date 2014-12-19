@@ -13,7 +13,7 @@
 namespace core {
 
     class Coord;
-    
+
     enum CellType {
         GROUND = 0,
         ROCK
@@ -30,7 +30,6 @@ namespace core {
         Point(int _line, int _column) : line(_line), column(_column) {
         }
 
-        
         bool operator==(const Point& other)const {
             return other.line == line && other.column == column;
         }
@@ -58,10 +57,10 @@ namespace core {
         void draw()const;
         core::Vector3d Point2Position(const core::Point&point)const;
         Point Position2Point(const core::Vector3d&c)const;
-        CellType operator()(int line,int column)const;
-        void setValue(int line,int column,CellType v);
+        CellType operator()(int line, int column) const;
+        void setValue(int line, int column, CellType v);
         core::PointList getWay(core::Point startPoint);
-        void changeCell(int line,int column, CellType ctype);
+        void changeCell(int line, int column, CellType ctype);
     private:
         GameMap() = default;
         ~GameMap() = default;
