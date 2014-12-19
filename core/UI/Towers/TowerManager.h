@@ -15,7 +15,8 @@ namespace core {
         virtual ~TowerManager();
         core::PtrTower getTowerById(int id);
         void append(core::PtrTower punit);
-
+        void calcNewTargets();
+        void calcTowersAngles();
         TowerList towers;
     private:
         TowerManager();

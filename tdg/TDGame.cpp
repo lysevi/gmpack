@@ -153,61 +153,11 @@ void TDGame::moveUnits() {
 }
 
 void TDGame::calcNewTargets(){
-    for(auto pt:core::TowerManager::get()->towers){
-        core::UnitList closesUnit;// досягаемые враги.
-        core::Coord towerCoord=pt->coord;
-        for(auto pu:core::UnitManager::get()->units){
-            core::Coord unit_coord=core::GameMap::instance.Point2Coord(pu->point);
-            if(core::Coord::distance(towerCoord,unit_coord)<pt->getRadius()){
-                closesUnit.push_back(pu);
-            }
-        }
-        if(closesUnit.size()==0){
-            pt->id_of_target=-1;
-            continue;
-        }
-        if(pt->id_of_target==-1){
-            pt->id_of_target=closesUnit.front()->id;
-        }
-        // если уже целимся в кого то.
-        if(pt->id_of_target!=-1){
-            // проверяем, что он все еще досягаем.
-            auto id_of_target=pt->id_of_target;
-            auto res=core::UnitManager::get()->getUnitById(id_of_target);
-            // если все еще досягаем
-            if(res!=nullptr){
-                continue;
-            }else{
-                pt->id_of_target=closesUnit.front()->id;
-            }
-        }
-    }
+    core::TowerManager::get()->calcNewTargets();
 }
 
 void TDGame::calcTowersAngles(){
-    
-    for(auto &pt:core::TowerManager::get()->towers){
-        if(pt->id_of_target==-1){
-            continue;
-        }
-
-        auto pu=core::UnitManager::get()->getUnitById(pt->id_of_target);
-
-        core::Vector3d gunface_orig=pt->gun_vector;
-	core::Vector3d gunface=gunface_orig;
-	auto gun_pos = pt->getLogicalCenter();
-        auto hero_pos = pu->getLogicalCenter();
-	gunface.norm();
-	auto guard_to_her = hero_pos - gun_pos;
-	guard_to_her.norm();
-	float angle = acosf(dot(gunface, guard_to_her))*(180/3.14159265358979323846264338327);
-        
-        if ((pt->getVector().y>pu->getVector().y))
-            angle = -angle;
-
-        pt->angle=angle;
-    }
-
+    core::TowerManager::get()->calcTowersAngles();
 }
 
 void TDGame::OnMapClick(int line,int column, core::Object3d*obj){
