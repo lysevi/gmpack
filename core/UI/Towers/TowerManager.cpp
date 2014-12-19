@@ -44,10 +44,11 @@ void TowerManager::append(core::PtrTower punit) {
 void TowerManager::calcNewTargets(){
     for(auto pt:towers){
         core::UnitList closesUnit;// досягаемые враги.
-        core::Coord towerCoord=pt->coord;
+        core::Vector3d towerCoord=pt->position;
         for(auto pu:core::UnitManager::get()->units){
-            core::Coord unit_coord=core::GameMap::instance.Point2Coord(pu->point);
-            if(core::Coord::distance(towerCoord,unit_coord)<pt->getRadius()){
+            core::Vector3d unit_coord=core::GameMap::instance.Point2Position(pu->point);
+            auto dist=(towerCoord-unit_coord).length();
+            if(dist<pt->getRadius()){
                 closesUnit.push_back(pu);
             }
         }

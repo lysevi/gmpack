@@ -26,14 +26,14 @@ void Object3d::OnClick(){
 }
 
 Vector3d Object3d::getVector()const{
-    return Vector3d(coord.x,coord.y,ZCoord);
+    return position;
 }
 
 
 Vector3d Object3d::getLogicalCenter()const{
     Vector3d result;
-    result.x=this->coord.x+this->size.height/2;
-    result.y=this->coord.y+this->size.height/2;
+    result.x=this->position.x+this->size.height/2;
+    result.y=this->position.y+this->size.height/2;
     result.z=ZCoord;
     return result;
 }

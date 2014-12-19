@@ -30,8 +30,8 @@ void BaseTower::setRadius(int newRadius){
     m_radius=newRadius;
 }
 
-void BaseTower::updateCoord(){
-    coord=GameMap::instance.Point2Coord(point);
+void BaseTower::updatePosition(){
+    position=GameMap::instance.Point2Position(point);
 }
 
 void BaseTower::draw()const{
@@ -39,8 +39,8 @@ void BaseTower::draw()const{
     if(isSelected){
         glColor3ub(255,100,255);
 
-        core::drawCircle(coord.x+this->size.width/2,
-                coord.y+this->size.height/2,
+        core::drawCircle(position.x+this->size.width/2,
+                position.y+this->size.height/2,
                 ZCoord,
                 m_radius,
                 50);
@@ -49,14 +49,14 @@ void BaseTower::draw()const{
     glLoadName(id);
     glBegin(GL_POLYGON);
     glColor3ub(255,100,4);
-    glVertex3d(coord.x,
-            coord.y,
+    glVertex3d(position.x,
+            position.y,
             ZCoord);
-    glVertex3d(coord.x,
-            coord.y+this->size.height,
+    glVertex3d(position.x,
+            position.y+this->size.height,
             ZCoord);
-    glVertex3d(coord.x+this->size.width,coord.y+this->size.height, ZCoord);
-    glVertex3d(coord.x+this->size.width,coord.y, ZCoord);
+    glVertex3d(position.x+this->size.width,position.y+this->size.height, ZCoord);
+    glVertex3d(position.x+this->size.width,position.y, ZCoord);
     glEnd();
 
     glPushMatrix();

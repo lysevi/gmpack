@@ -52,7 +52,7 @@ void UnitManager::nextStep(){
         if (res != punit->path.cend()) {
             punit->point.line = res->line;
             punit->point.column = res->column;
-            punit->coord=core::GameMap::instance.Point2Coord(punit->point);
+            punit->position=core::GameMap::instance.Point2Position(punit->point);
 
         } else {
             removedUnits.push_back(punit);

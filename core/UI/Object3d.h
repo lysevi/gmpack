@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "../Utils/MemCheckObject.h"
-#include "../Utils/Coord.h"
 #include "../Utils/Size.h"
 #include "../Utils/PathFinder.h"
 #include "../Math/Vector3d.h"
@@ -37,7 +36,7 @@ namespace core
         int  id;
         bool isSelected;
         Point point;
-        Coord coord;
+        Vector3d position;
         Size  size;
     };
 

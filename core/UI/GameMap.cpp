@@ -1,7 +1,6 @@
 #include "GameMap.h"
 #include "../Utils/PathFinder.h"
 #include "../Utils/Exception.h"
-#include "../Utils/Coord.h"
 #include "Units/UnitManager.h"
 #include "Helpers.h"
 #include <GL/gl.h>
@@ -104,14 +103,14 @@ void GameMap::draw()const{
     }
 }
 
-core::Coord GameMap::Point2Coord(const core::Point&point)const{
-    core::Coord result;
+core::Vector3d GameMap::Point2Position(const core::Point&point)const{
+    core::Vector3d result;
     result.x=point.column*cell_width;
     result.y=point.line*cell_height;
     return result;
 }
 
-Point GameMap::Coord2Point(const core::Coord&c)const{
+Point GameMap::Position2Point(const core::Vector3d&c)const{
     Point result;
     result.line=c.y/cell_height;
     result.column=c.x/cell_width;

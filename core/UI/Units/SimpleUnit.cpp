@@ -19,9 +19,9 @@ void SimpleUnit::draw()const{
     
     glBegin(GL_TRIANGLES);
     glColor3ub(255,10,255);
-    glVertex3i(coord.x,coord.y,ZCoord);
-    glVertex3i(coord.x+core::GameMap::instance.cell_width,coord.y,ZCoord);
-    glVertex3i(coord.x+core::GameMap::instance.cell_width/2,
-            coord.y+core::GameMap::instance.cell_height,ZCoord);
+    glVertex3i(position.x,position.y,ZCoord);
+    glVertex3i(position.x+core::GameMap::instance.cell_width,position.y,ZCoord);
+    glVertex3i(position.x+core::GameMap::instance.cell_width/2,
+            position.y+core::GameMap::instance.cell_height,ZCoord);
     glEnd();
 }

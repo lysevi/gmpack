@@ -88,14 +88,14 @@ void TDGame::OnLButtonDown(int mX, int mY) {
     vz = -1;
     gluUnProject(vx, vy, vz, modelview, projection, viewport, &wx, &wy, &wz);
 
-    core::Coord coord{(int)wx,(int)wy};
-    auto p=core::GameMap::instance.Coord2Point(coord);
+    core::Vector3d position{(float)wx,(float)wy,(float)0};
+    auto p=core::GameMap::instance.Position2Point(position);
     
     core::TowerList::value_type selectedTower;
     for (auto&ptower:core::TowerManager::get()->towers) {
-        if ((ptower->coord.x < wx) && (ptower->coord.y < wy)
-                && (ptower->coord.y + ptower->size.height > wy)
-                && (ptower->coord.x + ptower->size.width > wx)) {
+        if ((ptower->position.x < wx) && (ptower->position.y < wy)
+                && (ptower->position.y + ptower->size.height > wy)
+                && (ptower->position.x + ptower->size.width > wx)) {
             ptower->isSelected = !ptower->isSelected;
             selectedTower=ptower;
             break;
@@ -103,9 +103,9 @@ void TDGame::OnLButtonDown(int mX, int mY) {
     }
     OnMapClick(p.line,p.column,selectedTower.get());
     for (auto&p:core::UnitManager::get()->units) {
-        if ((p->coord.x < wx) && (p->coord.y < wy)
-                && (p->coord.y + p->size.height > wy)
-                && (p->coord.x + p->size.width > wx)) {
+        if ((p->position.x < wx) && (p->position.y < wy)
+                && (p->position.y + p->size.height > wy)
+                && (p->position.x + p->size.width > wx)) {
             p->isSelected = !p->isSelected;
         }
     }
@@ -120,7 +120,7 @@ void TDGame::OnMouseMove(int mX, int mY, int relX, int relY, bool Left, bool Rig
 void TDGame::placeTower(int line,int column, core::PtrTower tower){
     tower->point.column = column;
     tower->point.line = line;
-    tower->updateCoord();
+    tower->updatePosition();
     core::TowerManager::get()->towers.push_back(tower);
     core::GameMap::instance.changeCell(line,column,core::CellType::ROCK);
 }
@@ -175,7 +175,7 @@ void TDGame::OnMapClick(int line,int column, core::Object3d*obj){
         }
         
         auto stower = std::make_shared<core::BaseTower>();
-        stower->updateCoord();
+        stower->updatePosition();
         placeTower(line,column,stower);
     }
 }

@@ -8,6 +8,8 @@
 #pragma once
 #include <list>
 
+#include "../Math/Vector3d.h"
+
 namespace core {
 
     class Coord;
@@ -54,8 +56,8 @@ namespace core {
         void setUiSize(int width, int height);
         void generateMap();
         void draw()const;
-        core::Coord Point2Coord(const core::Point&point)const;
-        Point Coord2Point(const core::Coord&c)const;
+        core::Vector3d Point2Position(const core::Point&point)const;
+        Point Position2Point(const core::Vector3d&c)const;
         CellType operator()(int line,int column)const;
         void setValue(int line,int column,CellType v);
         core::PointList getWay(core::Point startPoint);
