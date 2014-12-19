@@ -9,17 +9,17 @@
 
 #include <memory>
 
-#include "../Utils/MemCheckObject.h"
 #include "../Utils/Size.h"
 #include "../Utils/PathFinder.h"
 #include "../Math/Vector3d.h"
+#include "../Utils/ProcessLogger.h"
 
 namespace core {
     const int ZCoord = 5;
     class Object3d;
     typedef std::shared_ptr<Object3d> PtrObject3d;
-
-    class Object3d : public MemCheckObject {
+    typedef unsigned int uint;
+    class Object3d {
         static uint nextID;
     protected:
     public:
