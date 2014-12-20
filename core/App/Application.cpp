@@ -68,12 +68,11 @@ bool Application::OnInit() {
     glClearDepth(1.0);
     glDepthFunc(GL_LESS);
     glEnable(GL_DEPTH_TEST); // включаем тест глубины
-    glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0,0,m_width,m_height);
     glOrtho(-10,m_width-10,-10,m_height-10,-100,100);
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     

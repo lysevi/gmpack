@@ -8,6 +8,7 @@
 #pragma once
 
 #include <memory>
+#include <SDL2/SDL.h>
 
 #include "../Utils/Size.h"
 #include "../Utils/PathFinder.h"
@@ -29,6 +30,7 @@ namespace core {
 
         virtual void draw()const = 0;
         virtual void OnClick();
+        virtual void onLoop();
         virtual Vector3d getLogicalCenter()const;
         Vector3d getVector()const;
     public:

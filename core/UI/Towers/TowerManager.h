@@ -17,6 +17,7 @@ namespace core {
         void append(core::PtrTower punit);
         void calcNewTargets();
         void calcTowersAngles();
+        void onLoop();
         TowerList towers;
     private:
         TowerManager();

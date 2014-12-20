@@ -36,3 +36,6 @@ Vector3d Object3d::getLogicalCenter()const {
     result.z = ZCoord;
     return result;
 }
+
+void Object3d::onLoop(){
+}

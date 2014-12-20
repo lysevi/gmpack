@@ -10,6 +10,7 @@
 #include <Utils/ProcessLogger.h>
 #include <Math/Vector3d.h>
 #include <UI/Units/UnitManager.h>
+#include <UI/Bullets/BulletManager.h>
 #include <GL/gl.h> // Библиотека OpenGL
 #include <GL/glu.h> // Библиотека GLU
 #include <algorithm>
@@ -35,15 +36,19 @@ void TDGame::OnActivate() {
     core::ProcessLogger::start();
     core::UnitManager::start();
     core::TowerManager::start();
+    core::BulletManager::start();
 }
 
 void TDGame::OnDeactivate() {
     core::UnitManager::stop();
     core::TowerManager::stop();
     core::ProcessLogger::stop();
+    core::BulletManager::stop();
 }
 
 void TDGame::OnLoop() {
+    core::BulletManager::get()->onLoop();
+    core::TowerManager::get()->onLoop();
     if (m_curMoveTime == 0) {
         m_curMoveTime = SDL_GetTicks();
     } else if (m_curMoveTime + unit_move_time < SDL_GetTicks()) {
@@ -68,6 +73,8 @@ void TDGame::OnRender() {
     for (auto pt:core::TowerManager::get()->towers) {
         pt->draw();
     }
+
+    core::BulletManager::get()->draw();
 }
 
 void TDGame::OnLButtonDown(int mX, int mY) {

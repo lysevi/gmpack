@@ -1,6 +1,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "BaseTower.h"
+#include "../Bullets/BulletManager.h"
 #include "../Helpers.h"
 
 using namespace core;
@@ -70,4 +71,19 @@ void BaseTower::draw()const {
     glEnd();
     glPopMatrix();
     glLoadIdentity();
+}
+
+void BaseTower::onLoop() {
+    if (m_lastShootTime == 0) {
+        m_lastShootTime = SDL_GetTicks();
+    } else if (m_lastShootTime + BaseTower_shot_time < SDL_GetTicks()) {
+        m_lastShootTime=SDL_GetTicks();
+        if (id_of_target >= 0) {
+            core::PtrBullet pb = std::make_shared<BaseBullet>();
+            pb->id_of_target = id_of_target;
+            pb->position = position;
+            pb->position.z=ZCoord;
+            core::BulletManager::get()->append(pb);
+        }
+    }
 }

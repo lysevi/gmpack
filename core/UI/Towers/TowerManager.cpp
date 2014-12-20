@@ -97,3 +97,9 @@ void TowerManager::calcTowersAngles() {
         pt->angle = angle;
     }
 }
+
+void TowerManager::onLoop(){
+     for (auto pt:towers){
+         pt->onLoop();
+     }
+}
