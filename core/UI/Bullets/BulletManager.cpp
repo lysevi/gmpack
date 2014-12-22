@@ -35,7 +35,6 @@ void BulletManager::append(core::PtrBullet punit) {
 void BulletManager::onLoop(){
     BulletList toRemove;
     for(auto pb:bullets){
-        logger<<"id_of_target="<<pb->id_of_target<<std::endl;
         auto target=core::UnitManager::get()->getUnitById(pb->id_of_target);
         if(distance(target->position,pb->position)<core::GameMap::instance.cell_width){
             toRemove.push_back(pb);
