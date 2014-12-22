@@ -20,7 +20,7 @@ BulletManager* BulletManager::get() {
 }
 
 void BulletManager::start() {
-    TowerManager::get();
+    BulletManager::get();
 }
 
 void BulletManager::stop() {
