@@ -9,6 +9,8 @@
 
 #include "../Object3d.h"
 #include "../GameMap.h"
+#include "../../Utils/Health.h"
+
 #include <memory>
 
 namespace core {
@@ -21,17 +23,18 @@ namespace core {
         
     public:
         BaseUnit();
-        BaseUnit(const BaseUnit& orig);
+        BaseUnit(const BaseUnit& orig)=default;
         bool tryFillPath();
         virtual ~BaseUnit();
         void draw()const;
-    public:
-        
+        void onLoop();
     public:
         core::PointList path;
         core::Point    dest_point;
         core::Vector3d dest_position;
         core::Vector3d move_speed;
+        core::Health   health;
+        bool isDead;
     };
 
 }

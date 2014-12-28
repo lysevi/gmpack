@@ -51,9 +51,17 @@ void UnitManager::append(core::PtrUnit punit) {
     units.push_back(punit);
 }
 
+void UnitManager::removeDeads(){
+    auto predicat=[](PtrUnit pu){
+            return pu->isDead;
+    };
+    units.remove_if(predicat);
+}
+
 void UnitManager::nextStep() {
     core::UnitList removedUnits;
     for (auto&punit:units) {
+
         auto cur_dist = core::distance(punit->position, punit->dest_position);
         if (cur_dist >= 2) {
             calcNewPosition(punit);
@@ -84,7 +92,7 @@ void UnitManager::nextStep() {
             for (auto p:removedUnits) { // удаляем те юниты, что дошли до конца
                 units.remove(p);
             }
-             // обновился список. если не удалить, то будет эксепшен
+            // обновился список. если не удалить, то будет эксепшен
             if (removedUnits.size() != 0)
                 break;
         }
@@ -108,8 +116,14 @@ void UnitManager::calcNewPosition(PtrUnit punit)const {
     punit->position = punit->position + delta_v;
 }
 
-void UnitManager::draw(){
-     for (auto punit:units) {
+void UnitManager::draw() {
+    for (auto punit:units) {
         punit->draw();
+    }
+}
+
+void UnitManager::onLoop(){
+    for (auto punit:units) {
+        punit->onLoop();
     }
 }

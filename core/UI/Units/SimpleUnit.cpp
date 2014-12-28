@@ -5,9 +5,7 @@
 using namespace core;
 
 SimpleUnit::SimpleUnit() {
-}
-
-SimpleUnit::SimpleUnit(const SimpleUnit& orig) {
+    health.curHealth=health.maxHealth=30;
 }
 
 SimpleUnit::~SimpleUnit() {
@@ -16,7 +14,7 @@ SimpleUnit::~SimpleUnit() {
 void SimpleUnit::draw()const {
     if (isSelected)
         logger << "un" << id << " isSelected\n";
-
+    logger<<"cur: "<<health.curHealth<<" max:"<<health.maxHealth<<std::endl;
     glBegin(GL_TRIANGLES);
     glColor3ub(255, 10, 255);
     glVertex3i(position.x, position.y, ZCoord);

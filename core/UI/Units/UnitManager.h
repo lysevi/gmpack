@@ -15,9 +15,11 @@ namespace core {
         virtual ~UnitManager();
         core::PtrUnit getUnitById(int id);
         void append(core::PtrUnit punit);
+        void removeDeads();
         void nextStep();
         bool tryMakeNewWays(); // пытается обновить у всех юнитов путь.
         void draw();
+        void onLoop();
         UnitList units;
     private:
         void calcNewPosition(PtrUnit punit)const;

@@ -25,7 +25,7 @@ namespace core {
     protected:
     public:
         Object3d();
-        Object3d(const Object3d& orig);
+        Object3d(const Object3d& orig)=default;
         virtual ~Object3d();
 
         virtual void draw()const = 0;

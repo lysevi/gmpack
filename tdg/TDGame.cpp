@@ -47,6 +47,8 @@ void TDGame::OnDeactivate() {
 }
 
 void TDGame::OnLoop() {
+    core::UnitManager::get()->onLoop();
+    core::UnitManager::get()->removeDeads();
     core::BulletManager::get()->onLoop();
     core::TowerManager::get()->onLoop();
     if (m_curMoveTime == 0) {

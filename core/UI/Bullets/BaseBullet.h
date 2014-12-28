@@ -9,7 +9,7 @@ namespace core {
     class BaseBullet : public Object3d {
     public:
         BaseBullet();
-        BaseBullet(const BaseBullet& orig);
+        BaseBullet(const BaseBullet& orig)=default;
         virtual ~BaseBullet();
         void draw()const;
     public:

@@ -16,8 +16,6 @@ Object3d::Object3d() {
     nextID += 1;
 }
 
-Object3d::Object3d(const Object3d& orig) {
-}
 
 Object3d::~Object3d() {
 }

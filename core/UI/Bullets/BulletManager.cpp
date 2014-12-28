@@ -38,6 +38,7 @@ void BulletManager::onLoop(){
         auto target=core::UnitManager::get()->getUnitById(pb->id_of_target);
         auto target_center=target->getLogicalCenter();
         if(distance(target_center,pb->position)<core::GameMap::instance.cell_width){
+            target->health.curHealth-=pb->damage;
             toRemove.push_back(pb);
             continue;
         }

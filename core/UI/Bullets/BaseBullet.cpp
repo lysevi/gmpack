@@ -6,10 +6,9 @@ using namespace core;
 
 BaseBullet::BaseBullet() {
     speed.x=speed.y=0.4;
+    damage=5;
 }
 
-BaseBullet::BaseBullet(const BaseBullet& orig) {
-}
 
 BaseBullet::~BaseBullet() {
 }
