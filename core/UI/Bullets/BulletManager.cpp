@@ -36,13 +36,14 @@ void BulletManager::onLoop(){
     BulletList toRemove;
     for(auto pb:bullets){
         auto target=core::UnitManager::get()->getUnitById(pb->id_of_target);
-        if(distance(target->position,pb->position)<core::GameMap::instance.cell_width){
+        auto target_center=target->getLogicalCenter();
+        if(distance(target_center,pb->position)<core::GameMap::instance.cell_width){
             toRemove.push_back(pb);
             continue;
         }
         assert(target!=nullptr);
 
-        auto dv=(target->position - pb->position);
+        auto dv=(target_center - pb->position);
         pb->position=pb->position+dv*pb->speed;
     }
 
