@@ -5,7 +5,11 @@
  * Created on 13 декабря 2014 г., 9:17
  */
 
+#include <GL/gl.h>
+
 #include "BaseUnit.h"
+#include "../Helpers.h"
+
 using namespace core;
 
 BaseUnit::BaseUnit() {
@@ -16,6 +20,15 @@ BaseUnit::BaseUnit() {
 }
 
 BaseUnit::~BaseUnit() {
+}
+
+void BaseUnit::drawHealt()const{
+    glColor4ub(255,255,255,100);
+    auto healt_width=core::GameMap::instance.cell_width;
+    drawQUAD(position.x,position.y,ZCoord+1,healt_width,4);
+    healt_width=(static_cast<float>(healt_width)/health.maxHealth)*health.curHealth;
+    glColor4ub(255,0,0,250);
+    drawQUAD(position.x+1,position.y+1,ZCoord+2,healt_width,2);
 }
 
 void BaseUnit::draw()const {

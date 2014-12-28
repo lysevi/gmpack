@@ -5,7 +5,7 @@
 using namespace core;
 
 SimpleUnit::SimpleUnit() {
-    health.curHealth=health.maxHealth=30;
+    health.curHealth=health.maxHealth=100;
 }
 
 SimpleUnit::~SimpleUnit() {
@@ -24,4 +24,6 @@ void SimpleUnit::draw()const {
     glVertex3i(position.x + core::GameMap::instance.cell_width / 2,
             position.y + core::GameMap::instance.cell_height, ZCoord);
     glEnd();
+
+    drawHealt();
 }

@@ -27,6 +27,7 @@ namespace core {
         bool tryFillPath();
         virtual ~BaseUnit();
         void draw()const;
+        void drawHealt()const;
         void onLoop();
     public:
         core::PointList path;
