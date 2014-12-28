@@ -16,19 +16,20 @@ BaseUnit::BaseUnit() {
     size.height = core::GameMap::instance.cell_height;
     size.width = core::GameMap::instance.cell_width;
     move_speed.x = move_speed.y = 3;
-    isDead=false;
+    isDead = false;
+    angle_on_damage = 0;
 }
 
 BaseUnit::~BaseUnit() {
 }
 
-void BaseUnit::drawHealt()const{
-    glColor4ub(255,255,255,100);
-    auto healt_width=core::GameMap::instance.cell_width;
-    drawQUAD(position.x,position.y,ZCoord+1,healt_width,4);
-    healt_width=(static_cast<float>(healt_width)/health.maxHealth)*health.curHealth;
-    glColor4ub(255,0,0,250);
-    drawQUAD(position.x+1,position.y+1,ZCoord+2,healt_width,2);
+void BaseUnit::drawHealt()const {
+    glColor4ub(255, 255, 255, 100);
+    auto healt_width = core::GameMap::instance.cell_width;
+    drawQUAD(position.x, position.y, ZCoord + 1, healt_width, 4);
+    healt_width = (static_cast<float> (healt_width) / health.maxHealth) * health.curHealth;
+    glColor4ub(255, 0, 0, 250);
+    drawQUAD(position.x + 1, position.y + 1, ZCoord + 2, healt_width, 2);
 }
 
 void BaseUnit::draw()const {
@@ -44,10 +45,14 @@ bool BaseUnit::tryFillPath() {
     }
 }
 
-void BaseUnit::onLoop(){
-    if(health.curHealth<=0){
-        isDead=true;
-    }else{
-        isDead=false;
+void BaseUnit::onLoop() {
+    if (health.curHealth <= 0) {
+        isDead = true;
+    } else {
+        isDead = false;
     }
+}
+
+void BaseUnit::onDamage() {
+    angle_on_damage += 5;
 }

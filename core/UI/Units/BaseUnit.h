@@ -28,6 +28,7 @@ namespace core {
         virtual ~BaseUnit();
         void draw()const;
         void drawHealt()const;
+        void onDamage();
         void onLoop();
     public:
         core::PointList path;
@@ -35,7 +36,8 @@ namespace core {
         core::Vector3d dest_position;
         core::Vector3d move_speed;
         core::Health   health;
-        bool isDead;
+        bool  isDead;
+        float angle_on_damage;// угол уклона. меняется, когда в объект попадают.
     };
 
 }
