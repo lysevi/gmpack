@@ -107,3 +107,9 @@ void UnitManager::calcNewPosition(PtrUnit punit)const {
 
     punit->position = punit->position + delta_v;
 }
+
+void UnitManager::draw(){
+     for (auto punit:units) {
+        punit->draw();
+    }
+}

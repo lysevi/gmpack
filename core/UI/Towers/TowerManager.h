@@ -18,6 +18,7 @@ namespace core {
         void calcNewTargets();
         void calcTowersAngles();
         void onLoop();
+        void draw();
         TowerList towers;
     private:
         TowerManager();

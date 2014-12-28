@@ -103,3 +103,9 @@ void TowerManager::onLoop(){
          pt->onLoop();
      }
 }
+
+void TowerManager::draw(){
+    for (auto pt:towers) {
+        pt->draw();
+    }
+}

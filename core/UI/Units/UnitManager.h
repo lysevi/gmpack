@@ -17,6 +17,7 @@ namespace core {
         void append(core::PtrUnit punit);
         void nextStep();
         bool tryMakeNewWays(); // пытается обновить у всех юнитов путь.
+        void draw();
         UnitList units;
     private:
         void calcNewPosition(PtrUnit punit)const;

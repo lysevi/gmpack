@@ -65,14 +65,12 @@ void TDGame::OnLoop() {
 void TDGame::OnRender() {
     glInitNames();
     glPushName(0);
-    core::GameMap::instance.draw();
-    for (auto punit:core::UnitManager::get()->units) {
-        punit->draw();
-    }
 
-    for (auto pt:core::TowerManager::get()->towers) {
-        pt->draw();
-    }
+    core::GameMap::instance.draw();
+    
+    core::UnitManager::get()->draw();
+
+    core::TowerManager::get()->draw();
 
     core::BulletManager::get()->draw();
 }
